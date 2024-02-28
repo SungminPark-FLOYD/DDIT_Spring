@@ -1,13 +1,19 @@
 package kr.or.ddit.io;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * 
@@ -42,11 +48,71 @@ public class StreamDesc {
 		//readEngString_byteStream();
 		//readEngString_charStream();
 //		readKorString_charStream();
-		readKorString_trywithResource();
+//		readKorString_trywithResource();
+//		readAndWriteKorString_trywithResource();
+		readAndWriteKorString_copy();
 	}
 
+	private static void readAndWriteKorString_copy() throws FileNotFoundException, IOException {
+		File readFile = new File("D:/00.medias/ETA_ANSI.txt");
+		File writeFile = new File("D:/ETA_ANSI.txt");
+		
+		try (
+				InputStream is =  new FileInputStream(readFile);
+				BufferedInputStream bis = new BufferedInputStream(is);
+				 OutputStream os = new FileOutputStream(writeFile);
+				 BufferedOutputStream bos = new BufferedOutputStream(os);
+				) {
+	        // stream copy
+//		        byte[] buffer = new byte[1024];
+	        int length;
+	        while ((length = bis.read()) != -1) {
+	        	bos.write(length);
+	        }
+	    }	
+	}	
+
+	private static void readAndWriteKorString_trywithResource() throws IOException {
+		File readFile = new File("D:/00.medias/ETA_ANSI.txt");
+		File writeFile = new File("D:/ETA_ANSI.txt");
+		if (!writeFile.exists()) {
+			try{
+				writeFile.createNewFile();
+			    System.out.println("파일 생성");
+		        } 
+		        catch(Exception e){
+			    e.getStackTrace();
+			}        
+	         }
+	
+		
+		try(
+				FileInputStream fis = new FileInputStream(readFile);
+//				InputStreamReader isr = new InputStreamReader(fis, "ms949");
+//				BufferedReader reader = new BufferedReader(fis);
+				BufferedInputStream bis = new BufferedInputStream(fis);
+				FileOutputStream fos = new FileOutputStream(writeFile);
+//				OutputStreamWriter osw = new OutputStreamWriter(fos, "ms949");
+//				BufferedWriter writer = new BufferedWriter(fos);
+				BufferedOutputStream bos = new BufferedOutputStream(fos);
+			) {
+			String readStr = null;
+//			while((readStr = reader.readLine())!= null) {
+//				writer.write(readStr);	
+//				writer.write(String.format("%s\n",readStr);
+//			}
+			int re = -1;
+			while((re = bis.read())!= -1) {
+				bos.write(re);	
+			}
+		}
+	}
+		
+	
+
 	private static void readKorString_trywithResource() throws IOException{
-		File txtFile = new File("D:/00.medias/ETA_ANSI.txt");
+//		File txtFile = new File("D:/00.medias/ETA_ANSI.txt");
+		File txtFile = new File("D:/ETA_ANSI.txt");
 //		try(Closable 객체 선언문) {} -> 자동으로 finally추가
 		try(
 			FileInputStream fis = new FileInputStream(txtFile);

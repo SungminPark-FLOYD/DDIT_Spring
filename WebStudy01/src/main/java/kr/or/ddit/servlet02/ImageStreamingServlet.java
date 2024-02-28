@@ -1,5 +1,7 @@
 package kr.or.ddit.servlet02;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,23 +38,39 @@ public class ImageStreamingServlet extends HttpServlet{
 		String fileName = req.getParameter("name");		
 		// 파일 이름이 비어있거나 null일 경우 400 Bad Request 응답을 보냄
 	    if (fileName == null || fileName.isEmpty()) {
-	        resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+	    	//클라이언트 요청을 검증할때 400에러 코드를 자주 활용한다
+	        resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "이미지 파일명이 없음");
 	        return;
 	    }
-
 		
 		File imageFile = new File(imageFolder, fileName);
+		if(!imageFile.exists()) {
+			//404에러
+	        resp.sendError(HttpServletResponse.SC_NOT_FOUND, String.format("%s 파일은 없음", fileName));
+	        return;
+		}
 		String mime = application.getMimeType(imageFile.getName());
+		System.out.println(mime);
+		//mime.contains() , mime.startWith(), mime.indexOf()
+		if(mime == null || mime.isEmpty() || mime.indexOf("image") == -1) {
+			//400에러
+	        resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "정상적인 파일이 아님");
+	        return;
+		}
 		
 		resp.setContentType(mime);
 		resp.setContentLengthLong(imageFile.length());
 		
-		try (InputStream is = new FileInputStream(imageFile); OutputStream os = resp.getOutputStream()) {
+		try (InputStream is = new FileInputStream(imageFile);
+			 OutputStream os = resp.getOutputStream();
+			 BufferedInputStream bis = new BufferedInputStream(is);
+			 BufferedOutputStream bos = new BufferedOutputStream(os);
+			) {
 	        // stream copy
-	        byte[] buffer = new byte[1024];
+//	        byte[] buffer = new byte[1024];
 	        int length;
-	        while ((length = is.read(buffer)) != -1) {
-	            os.write(buffer, 0, length);
+	        while ((length = bis.read()) != -1) {
+	        	bos.write(length);
 	        }
 	    }
 		
