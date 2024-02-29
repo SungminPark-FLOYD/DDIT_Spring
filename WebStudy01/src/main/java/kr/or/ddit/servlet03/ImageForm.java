@@ -85,8 +85,6 @@ public class ImageForm extends HttpServlet {
 			 BufferedInputStream bis = new BufferedInputStream(is);
 			 BufferedOutputStream bos = new BufferedOutputStream(os);
 			) {
-	        // stream copy
-//	        byte[] buffer = new byte[1024];
 	        int length;
 	        while ((length = bis.read()) != -1) {
 	        	bos.write(length);
