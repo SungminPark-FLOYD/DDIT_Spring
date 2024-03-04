@@ -4,7 +4,7 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-	<servlet>
+<!-- 	<servlet>
 		<servlet-name>mimeTextDesc</servlet-name>
 		<servlet-class>kr.or.ddit.servlet02.MimeTextDescServlet</servlet-class>
 		<init-param>
@@ -16,5 +16,5 @@
 	<servlet-mapping>
 		<servlet-name>mimeTextDesc</servlet-name>
 		<url-pattern>/mime</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 </web-app>

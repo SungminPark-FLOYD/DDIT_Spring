@@ -8,6 +8,7 @@
 5. body에 new img를 추가(append)
  */
 //=> form이 하나밖에 없으므로 0번째
+
 document.forms[0].addEventListener("submit", (event)=> {
 	event.preventDefault();
 	let url = event.target.action;
@@ -17,9 +18,3 @@ document.forms[0].addEventListener("submit", (event)=> {
 	document.body.appendChild(newImg);
 }) 
 
-//let form = document.querySelector("form");
-//form.addEventListener("submit", (event)=>{	
-//    event.preventDefault();
-//	document.create
-	
-//});
