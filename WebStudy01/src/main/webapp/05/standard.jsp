@@ -12,6 +12,9 @@
 <pre>
 	: 자바와 서블릿 스펙을 기반으로 SSR을 구현하는 템플릿 엔진.
 	SSR(Server Side Rendering) : document의 모든 엘리먼트가 서버에서 텍스트 템플릿으로 생성되는 구조(JSP)
+		템플릿 엔진 : 데이터와 템플릿이 분리되어 개발되고, 분리된 두 요소를 결합해 최종 컨텐츠를 생성하는 소프트웨어
+			content => Mime type(maintype/subtype)
+			ex) HTML(text), JSON(application), Image(image), XML(application -> 예전에는 text이었음)
 	CSR(Client Side Rendering) : 엘리먼트는 클라이언트측에서 생성되고, 서버에서 데이터만 서비스 받는 구조.(React, Vue.js)
 	
 	jsp 문법 구성요소
@@ -52,6 +55,11 @@
 // 				var dummy = "더미"
 			</script>
 			<%-- JSP 주석 : 응답데이터에 포함되지 얺는다 --%>
+	3. 기본객체
+	4. action tag
+	5. 표현언어(EL) : ${attributeName }
+	6. JSTL 커스텀 태그 라이브러리
+	<!-- 1번을 제외한 모든 코드는 백그라운드 코드이다 -->
 </pre>
 </body>
 </html>

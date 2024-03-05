@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import kr.or.ddit.exception.FileCopyFailureException;
+
 /**
  * 
  * 스트림(stream)
@@ -53,7 +55,7 @@ public class StreamDesc {
 		readAndWriteKorString_copy();
 	}
 
-	private static void readAndWriteKorString_copy() throws FileNotFoundException, IOException {
+	private static void readAndWriteKorString_copy() {
 		File readFile = new File("D:/00.medias/ETA_ANSI.txt");
 		File writeFile = new File("D:/ETA_ANSI.txt");
 		
@@ -69,7 +71,9 @@ public class StreamDesc {
 	        while ((length = bis.read()) != -1) {
 	        	bos.write(length);
 	        }
-	    }	
+	    }catch (IOException e) {
+			throw new FileCopyFailureException(e);
+		}	
 	}	
 
 	private static void readAndWriteKorString_trywithResource() throws IOException {
