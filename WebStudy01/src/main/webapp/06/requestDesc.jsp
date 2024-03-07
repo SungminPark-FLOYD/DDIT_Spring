@@ -1,5 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java"
     pageEncoding="UTF-8"%>
+<%
+	String accept = request.getHeader("accept");
+	if(accept.contains("json")){
+		response.setContentType("application/json;charset=UTF-8");
+		%>
+		{
+			"result":"정상 서비스 완료"
+		}
+		<%
+	}else {
+		response.setContentType("text/html;charset=UTF-8");
+			
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +21,9 @@
 </head>
 <body>
 <h4>request(HttpServletRequest)</h4>
-<form method="get" enctype="multipart/form-data">
+<form method="post">
 	<input type="text" name="param1" value="VALUE1">
-	<input type="text" name="param2" value="VALUE2">
+	<input type="text" name="param2" value="한글값">
 	<input type="file" name="sendFile">
 	<button type="submit">전송</button>
 </form>
@@ -74,3 +87,6 @@
 </pre>
 </body>
 </html>
+<%
+	}	
+%>
