@@ -25,29 +25,36 @@ public class PersonDetailServlet extends HttpServlet{
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 Part part = req.getPart("who");
-
-	        if (part != null) {
-	            BufferedReader reader = new BufferedReader(new InputStreamReader(part.getInputStream()));
-	            StringBuilder requestBody = new StringBuilder();
-	            String line;
-
-	            while ((line = reader.readLine()) != null) {
-	                requestBody.append(line);
-	            }
-
-	            String memberId = requestBody.toString();
-	            PersonVo person = service.retrievePerson(memberId);
-	            Gson gson = new Gson();
-	            String personJson = gson.toJson(person);
-
-	            resp.setContentType("application/json");
-	            resp.setCharacterEncoding("UTF-8");
-
-	            resp.getWriter().write(personJson);
-
-	        } else {
-	        	resp.sendError(400, "필수 파라미터 누락");
-	        }
+		/*
+		 * Part part = req.getPart("who");
+		 * 
+		 * if (part != null) { BufferedReader reader = new BufferedReader(new
+		 * InputStreamReader(part.getInputStream())); StringBuilder requestBody = new
+		 * StringBuilder(); String line;
+		 * 
+		 * while ((line = reader.readLine()) != null) { requestBody.append(line); }
+		 * 
+		 * String memberId = requestBody.toString(); PersonVo person =
+		 * service.retrievePerson(memberId); Gson gson = new Gson(); String personJson =
+		 * gson.toJson(person);
+		 * 
+		 * resp.setContentType("application/json"); resp.setCharacterEncoding("UTF-8");
+		 * 
+		 * resp.getWriter().write(personJson);
+		 * 
+		 * } else { resp.sendError(400, "필수 파라미터 누락"); }
+		 */
+		
+		String id = req.getParameter("who");
+		if(id == null || id.isEmpty()) {
+			resp.sendError(400, "필수 파라미터 누락");
+			return;
+		}
+		
+		PersonVo person = service.retrievePerson(id);
+		req.setAttribute("person", person);
+		req.getRequestDispatcher("/WEB-INF/views/person/detail.jsp").forward(req,resp);
+		
+		
 	}
 }

@@ -26,7 +26,8 @@
 <h4>request 기본객체 활용</h4>
 <pre>
 	1. line
-		<%= request.getRequestURI() %>, <%= request.getMethod() %>
+		<%= request.getRequestURL() %>, <%= request.getMethod() %>		
+		<%= request.getRequestURI() %> -> 많이 사용한다.
 	2. Header
 		getHeader(name), getHeaderNames(), getDate[Int]Header(name)
 	3. body

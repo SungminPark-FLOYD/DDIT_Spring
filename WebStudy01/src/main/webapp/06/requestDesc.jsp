@@ -22,6 +22,8 @@
 <body>
 <h4>request(HttpServletRequest)</h4>
 <form method="post">
+	<%-- put 요청을 보낼때 --%>
+	<input type="hidden" name="_method" value="put">
 	<input type="text" name="param1" value="VALUE1">
 	<input type="text" name="param2" value="한글값">
 	<input type="file" name="sendFile">
@@ -42,8 +44,8 @@
 	 	TRACE : 
 	 	
 	 	RESTful URI 구조. -> 자원을 요청하고 받는 비동기 구조로 이루어져 있음(put과 delete는 비동기일때 가능)
-	 	ex) /member/memberInsert.do ->명사와 동사가 석여있음
-	 	ex) /member/memberDelete.do
+	 	ex) /member/memberInsert.do ->명사와 동사가 석여있음 (x)
+	 	ex) /member/memberDelete.do					    (x)
 	 	
 	 	ex) /member GET
 	 	ex) /member POST

@@ -10,9 +10,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-        .modal {
+        #detail {
         	width : 30%;
-            display: none;
+        	display : block;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -49,32 +49,8 @@
 		%>
 	</tbody>
 </table>
+<div id="detail"></div>
 
-<div id="myModal" class="modal">
-        <div id="modal-content">
-	        <table>
-			    <tr>
-			        <th>NAME</th>
-			        <td id="name"></td>
-			    </tr>
-			    <tr>
-			        <th>GEDER</th>
-			        <td id ="gender"></td>
-			    </tr>
-			    <tr>
-			        <th>AGE</th>
-			        <td id="age"></td>
-			    </tr>
-			    <tr>
-			        <th>ADDRESS</th>
-			        <td id="addr"></td>
-			    </tr>
-			    <tr>
-			    <td colsapn="2"><button id="btn">close</button></td>
-			    </tr>
-			</table>     
-        </div>
-</div>
 
 <script type="text/javascript">
 	function clickHandler(e) {
@@ -85,49 +61,31 @@
 		document.personForm.requestSubmit(); */
 		
         var memberId = event.target.getAttribute("data-member-id");
-
-        showModal(memberId);
+		fetch("<%=request.getContextPath()%>/people.do", {
+			  method: 'POST', // 또는 다른 HTTP 메서드를 선택할 수 있습니다.
+			  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			  body: new URLSearchParams({
+				    'who': memberId,
+			  }).toString(),
+			})
+			  .then(response => {
+			    // 서버 응답을 처리합니다.
+			    if (!response.ok) {
+			      throw new Error(`HTTP error! Status: ${response.status}`);
+			    }
+			    return response.text(); 
+			  })
+			  .then(data => {
+				 console.log(data);
+			    document.querySelector('#detail').innerHTML = data;
+			  })
+			  .catch(error => {
+			    // 오류 처리
+			    console.error('오류 발생:', error.message);
+			  });	
+	}
 		
-	}
 	
-	let modal = document.getElementById('myModal');
-	let button = document.getElementById('btn');
-
-	button.addEventListener('click', function() {	
-	    modal.style.display = "none";
-	    
-	});
-	
-
-	function showModal(memberId) {
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "<%=request.getContextPath()%>/people.do", true);
-
-		var formData = new FormData();
-		formData.append("who", memberId); 
-
-		xhr.onreadystatechange = function() {
-		    if (xhr.readyState == 4) {
-		        if (xhr.status == 200) {
-		            var data = JSON.parse(xhr.responseText);
-		            document.getElementById("name").innerText = data.name;
-		            document.getElementById("gender").innerText = data.gender;
-		            document.getElementById("age").innerText = data.age;
-		            document.getElementById("addr").innerText = data.address;
-		            
-		            var modal = document.getElementById('myModal');
-		            modal.style.display = "block";
-		            
-		        } else {
-		            // 오류 처리
-		            console.error("오류 발생: " + xhr.status);
-		        }
-		    }
-		};
-
-		// FormData를 전송
-		xhr.send(formData);
-	}
 </script>
 </body>
 </html>
