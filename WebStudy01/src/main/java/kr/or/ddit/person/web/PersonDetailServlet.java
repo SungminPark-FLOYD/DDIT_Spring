@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.google.gson.Gson;
-
 import kr.or.ddit.person.service.PersonService;
 import kr.or.ddit.person.service.PersonServiceImpl;
 import kr.or.ddit.vo.PersonVo;
