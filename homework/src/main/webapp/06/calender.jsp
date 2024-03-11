@@ -1,7 +1,7 @@
+<%@page import="java.util.Locale"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
-<%@page import="java.util.Locale"%>
 <%@page import="java.util.Calendar"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
@@ -10,14 +10,26 @@
 
 
 	//세션에서 언어 정보 가져오기
-	Locale userLocale = (Locale)session.getAttribute("userLocale");
+	Locale userLocale = null;
+	try{		
+		 userLocale = (Locale)session.getAttribute("userLocale");
+		
+	}catch(NullPointerException e) {
+		e.printStackTrace();
+	}finally{
+		// 세션에 언어 정보가 없을 경우 기본값 설정
+		if (userLocale == null) {
+		    userLocale = Locale.getDefault();
+		    session.setAttribute("userLocale", userLocale);
+		}
+	}
 	out.print(userLocale);
 	response.setLocale(userLocale);
 	Date currentDate = new Date();
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, userLocale);
 	out.print(dateFormat.format(currentDate));
 
-	
+
 	// 세션에 언어 정보가 없을 경우 기본값 설정
 	if (userLocale == null) {
 	    userLocale = Locale.getDefault();

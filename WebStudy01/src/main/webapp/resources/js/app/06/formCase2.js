@@ -80,7 +80,10 @@ forms[0].addEventListener("submit", e => {
 	})
 	.then(html => {
 		//document.body.append(html);
-		document.body.innerHTML = document.body.innerHTML + html;
+		//document.body.innerHTML = document.body.innerHTML + html;
+		
+		//좋은 방식은 아니다. -> 아직 받은 데이터에 html과 body가 낭아있기 때문에 나중에 dom tree구조로 만들때 어떻게 될지 모른다.
+		resultArea.innerHTML = html;
 	})
 	.catch(err => console.log(err));
 

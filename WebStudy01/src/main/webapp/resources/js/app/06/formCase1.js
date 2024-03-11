@@ -33,6 +33,7 @@ aTags.forEach(v => {
 //case2 : form의 전송을 비동기로
 //어떤 form태그든 적용할수 있는 라이브러리
 let forms = document.forms;
+//문서 전체를 대상으로 submit이벤트 가져오기
 forms[0].addEventListener("submit", e => {
 	e.preventDefault();
 	let form = e.target;
@@ -76,7 +77,15 @@ forms[0].addEventListener("submit", e => {
 	})
 	.then(html => {
 		//document.body.append(html);
-		document.body.innerHTML = document.body.innerHTML + html;
+		//document.body.innerHTML = document.body.innerHTML + html;
+		
+		let parser = new DOMParser();
+		//DOMParser를 이용해서 데이터 소스와 mime타입을 설정해준다 -> 새로운 document 생성
+		let newDoc = parser.parseFromString(html, 'text/html');
+		//파싱한 소스에서 h4라는 엘리먼트를 찾아서 가져온다
+		let h4Element = newDoc.querySelector("h4");
+		//찾은 소스를 document의 body에 넘겨준다
+		document.body.append(h4Element);
 	})
 	.catch(err => console.log(err));
 

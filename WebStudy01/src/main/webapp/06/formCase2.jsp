@@ -42,7 +42,7 @@
 		<button type="reset">취소</button>
 	</pre>
 </form>
-
+<div id="resultArea"></div>
 <!-- 비동기 요청 -->
 <script src="<%=request.getContextPath() %>/resources/js/app/06/formCase2.js">
 </script>
