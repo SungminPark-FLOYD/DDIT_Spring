@@ -16,6 +16,9 @@ import kr.or.ddit.enumpkg.BrowserInfo;
 
 @WebServlet("/07/userAgent.do")
 public class UserAgentServlet extends HttpServlet{
+	
+	
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
