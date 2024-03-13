@@ -2,28 +2,43 @@ package kr.or.ddit.calculate;
 
 
 public enum Operator {
-	PLUS,
-	MINUS,
-	MULTIPLY,
-	DIVIDE;
-	
+	PLUS("+") {
+	    @Override
+	    public int calculate(int num1, int num2) {
+	      return num1 + num2;
+	    }
+	  },
+	  MINUS("-") {
+	    @Override
+	    public int calculate(int num1, int num2) {
+	      return num1 - num2;
+	    }
+	  },
+	  MULTIPLY("*") {
+	    @Override
+	    public int calculate(int num1, int num2) {
+	      return num1 * num2;
+	    }
+	  },
+	  DIVIDE("/") {
+	    @Override
+	    public int calculate(int num1, int num2) {
+	      if (num2 == 0) {
+	        throw new ArithmeticException("0으로 나눌 수 없습니다.");
+	      }
+	      return num1 / num2;
+	    }
+	  };
 
-	public static String OP(int a, int b, String op) {
-		System.out.println(op);
-		String res = "%s %s %s = %s";
-				
-		if(op.equals("PLUS")) {		
-			res = String.format(res, a, "+", b, a+b);
-		}
-		else if(op.equals("MINUS")) {
-			res = String.format(res, a, "-", b, a-b);
-		}
-		else if(op.equals("MULTIPLY")) {
-			res = String.format(res, a, "*", b, a*b);
-		}else {
-			res = String.format(res, a, "/", b, a/b);
-		}
-		return res;
-		
-	}
+	  private final String symbol;
+
+	  Operator(String symbol) {
+	    this.symbol = symbol;
+	  }
+
+	  public String getSymbol() {
+	    return symbol;
+	  }
+
+	  public abstract int calculate(int num1, int num2);
 }
