@@ -1,3 +1,5 @@
+<%@page import="java.util.Optional"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="java.time.format.TextStyle"%>
 <%@page import="java.time.Month"%>
 <%@page import="java.time.format.FormatStyle"%>
@@ -22,12 +24,23 @@
 	//parsing : 문자열을 특정 타입의 데이터로 변환하는 작업.
 	//formatting : 특정 타입의 데이터를 일정 형식의 문자열로 변환하는 작업
 	//request.getLocale() : header의 acceptLanguage에의해서 결졍됨
-	Locale locale = request.getLocale();
-	if(localeP!= null) {
-		locale = Locale.forLanguageTag(localeP);
-	}
-	//서버기준 지역 아이디 구하기
-	ZoneId zone = ZoneId.systemDefault();
+// 	Locale locale = request.getLocale();
+// 	if(localeP!= null) {
+// 		locale = Locale.forLanguageTag(localeP);
+// 	}
+
+	Locale locale = Optional.ofNullable(localeP)
+						.filter(lp -> !lp.isEmpty())
+						.map(lp -> Locale.forLanguageTag(lp))
+						.orElse(request.getLocale());
+	
+	//서버기준 지역 아이디 구하기	
+	//자바 8이후의 문법
+	ZoneId zone = Optional.ofNullable(zoneP)
+					.filter(zp -> !zp.isEmpty())
+					.map(zp -> ZoneId.of(zp))
+					.orElse(ZoneId.systemDefault());
+	
 	//zoneid기준 현재 시각 구하기
 	ZonedDateTime now = ZonedDateTime.now(zone);
 	//현재 시각 기준 현재 날짜 구하기
@@ -67,7 +80,7 @@
 		calForm.year.value = <%=thisMonth.getYear() %>;
 		calForm.month.value = <%=thisMonth.getMonthValue() %>;
 		calForm.locale.value = '<%=locale.toLanguageTag() %>';
-<%-- 		calForm.zone.value = <%=thisMonth.getMonthValue() %>; --%>
+ 		calForm.zone.value = '<%=zone.getId() %>';
 
 		calForm.addEventListener("change", (e)=> {
 			e.target.form.requestSubmit();
@@ -91,7 +104,7 @@
 <h4>today : <%= today.format(DateTimeFormatter.ofLocalizedDate(FULL).withLocale(locale)) %></h4>
 
 <div>
-<h4 class="control" data-year="<%=prevMonth.getYear() %>" data-month="<%=prevMonth.getMonthValue() %>"><%=prevMonth %></h4>
+<h4 class="control title" data-year="<%=prevMonth.getYear() %>" data-month="<%=prevMonth.getMonthValue() %>"><%=prevMonth %></h4>
 <h4>thisMonth : <%= thisMonth.format(DateTimeFormatter.ofPattern("yyyy, MMMM", locale)) %></h4>
 <h4 class="control" data-year="<%=nextMonth.getYear() %>" data-month="<%=nextMonth.getMonthValue() %>"><%=nextMonth %></h4>
 </div>
@@ -108,8 +121,28 @@
 			}
 		%> 
 	</select>
-	<input type="text" name="locale" />
-	<input type="text" name="zone" />
+	<select name="locale">
+		<%
+			for(Locale single : Locale.getAvailableLocales()) {
+				if(single.getDisplayName().isEmpty()) continue;
+		%>
+			<option value="<%=single.toLanguageTag()%>"><%=single.getDisplayName(single) %></option>
+		<%		
+			}
+		%>
+		
+	</select>
+	<select name="zone">
+		<%
+			
+			for(String single : ZoneId.getAvailableZoneIds()){
+				out.println(
+						String.format("<option value='%s'>%s</option>", single, ZoneId.of(single).getDisplayName(TextStyle.FULL, locale))
+						);
+			}
+		
+		%>
+	</select>
 </form>
 
 </body>

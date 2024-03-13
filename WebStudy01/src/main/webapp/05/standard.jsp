@@ -1,13 +1,13 @@
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>05/standard.jsp</title>
-</head>
-<body>
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>05/standard.jsp</title> -->
+<!-- </head> -->
+<!-- <body> -->
 <h4>JSP(Java Server Page)</h4>
 <pre>
 	: 자바와 서블릿 스펙을 기반으로 SSR을 구현하는 템플릿 엔진.
@@ -61,5 +61,5 @@
 	6. JSTL 커스텀 태그 라이브러리
 	<!-- 1번을 제외한 모든 코드는 백그라운드 코드이다 -->
 </pre>
-</body>
-</html>
+<!-- </body> -->
+<!-- </html> -->
