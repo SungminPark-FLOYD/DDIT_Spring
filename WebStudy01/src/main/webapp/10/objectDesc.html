@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<pre>
+
+	동적 타입언어는 객체의 구조가 런타임에 변경되는 문법 구조를 갖고 있음.
+	객체의 프로퍼티에 접근 방법이 두가지.
+	1) dot notation : object.identifier (아이덴티파이어 규칙에 따라 만들어야함.특수문자,공백 등 X)
+	2) association array : object[literal] (literal 식별자의 형태를 다양하게 만들수 있음 )
+</pre>
+<form id="prop-form">
+	<input type="text" name="propName" placeholder="새로 추가할 프로퍼티 네임." />
+	<input type="text" name="propValue" placeholder="새로 추가할 프로퍼티 값." />
+	<button type="submit">기존 객체에 새로운 프로퍼티 추가</button>
+</form>
+<form id="array-form">
+	<input type="text" name="elementValue" placeholder="새로 추가할 프로퍼티 네임." />
+	<button type="submit">기존 배열에 새로운 요소 추가</button>
+</form>
+<script>
+	//오늘 보강때 배운 연산배열구조 최대한으로 활용하기
+
+	let blankObj = {};
+	let form = window['prop-form'];
+	form.addEventListener("submit",function(e){
+		e.preventDefault();
+		let propName = form.propName.value;
+		let propValue = form.propValue.value;
+		blankObj[propName] = propValue;
+		console.log(blankObj);
+		form.reset();
+	})
+	let array = [];
+	window['array-form'].addEventListener("submit", (e)=>{
+		e.preventDefault();
+		let form = e.target;
+		let newValue = form['elementValue']['value']; //2차원배열
+		array.push(newValue);
+		form.reset();
+		for(let element of array){ //향상된 for문은 of로 쓰임(java에서는 : )
+			console.log(element);
+		}
+	});
+
+</script>
+ 
+</body>
+</html>

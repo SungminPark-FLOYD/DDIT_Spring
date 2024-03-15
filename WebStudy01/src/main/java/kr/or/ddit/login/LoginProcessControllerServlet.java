@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.exception.ResponseStatusException;
+
 @WebServlet("/login/loginProcess.do")
 public class LoginProcessControllerServlet extends HttpServlet{
 	private boolean authenticate(String id, String password) {
@@ -34,21 +36,23 @@ public class LoginProcessControllerServlet extends HttpServlet{
 			//자바 1.8문법
 			String memId = Optional.of(req.getParameter("memId"))
 					.filter(id -> !id.isEmpty())
-					.orElseThrow(() -> new IllegalArgumentException("아이디 누락"));
+					.orElseThrow(() -> new ResponseStatusException(400, "아이디 누락"));
 			
 			String memPass = Optional.of(req.getParameter("memPass"))
 					.filter(pass -> !pass.isEmpty())
-					.orElseThrow(() -> new IllegalArgumentException("비밀번호 누락"));
+					.orElseThrow(() -> new ResponseStatusException(400, "비밀번호 누락"));
 			if(authenticate(memId, memPass)) {
 //				성공 -> 웰컴페이지로 이동 - redirect
 				resp.sendRedirect(req.getContextPath() + "/");
 			}else {
 //				실패 -> 로그인 페이지로 이동 - forward
+				req.setAttribute("message", "로그인실패");
 				req.getRequestDispatcher("/login/loginForm.jsp").forward(req, resp);
+				//resp.sendRedirect(req.getContextPath() + "/login/loginForm.jsp");
 			}
-		}catch(RuntimeException e) {
+		}catch(ResponseStatusException e) {
 //			- 불통과 -> 400 상태코드 전송
-			resp.sendError(400, e.getMessage());
+			resp.sendError(e.getStatus(), e.getMessage());
 		}
 
 		

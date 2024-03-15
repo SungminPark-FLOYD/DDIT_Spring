@@ -83,6 +83,7 @@
 				response.sendRedirect(request.getContextPath() + "/08/calender.jsp");
 			%>
 	3. Response Body(Content Body, Message Body) : 응답 본문(content) 가 기록되는 영역
+	
 </pre>
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", e => {
