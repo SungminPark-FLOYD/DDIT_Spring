@@ -7,9 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%
-	String message = (String)request.getAttribute("message");
+	String message = (String)session.getAttribute("message");
 	if(message != null && !message.isEmpty()) {
-		
+		session.removeAttribute("message"); //flash attribute
 %>
 <script type="text/javascript">
 	alert("<%=message%>");
@@ -25,7 +25,7 @@
 							.orElse("");
 %>
 	<input type="text" name="memId" placeholder="아이디"/>
-	<input type="pass" name="memPass" placeholder="비밀번호"/>
+	<input type="password" name="memPass" placeholder="비밀번호"/>
 	<button type="submit">로그인</button>
 </form>
 </body>

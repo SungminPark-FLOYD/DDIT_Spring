@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.exception.ResponseStatusException;
 
@@ -19,6 +20,8 @@ public class LoginProcessControllerServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		
 		//1. body 영역의 디코딩에 사용할 chatset 결정
 		req.setCharacterEncoding("UTF-8");
 		//2. 파라미터 받기
@@ -46,9 +49,9 @@ public class LoginProcessControllerServlet extends HttpServlet{
 				resp.sendRedirect(req.getContextPath() + "/");
 			}else {
 //				실패 -> 로그인 페이지로 이동 - forward
-				req.setAttribute("message", "로그인실패");
-				req.getRequestDispatcher("/login/loginForm.jsp").forward(req, resp);
-				//resp.sendRedirect(req.getContextPath() + "/login/loginForm.jsp");
+				session.setAttribute("message", "로그인실패");
+				//req.getRequestDispatcher("/login/loginForm.jsp").forward(req, resp);
+				resp.sendRedirect(req.getContextPath() + "/login/loginForm.jsp");
 			}
 		}catch(ResponseStatusException e) {
 //			- 불통과 -> 400 상태코드 전송

@@ -37,13 +37,10 @@
 // 			session.invalidate();
 <%-- 		%> --%>
 </pre>
-<h4>세션 타이머 : <span id="time-area" data-ts-timeout="<%=session.getMaxInactiveInterval() %>"></span></h4>
-<!-- 인터벌로 시간 감소 -> 2:00형식으로 포멧팅 -->
-<div id="msg-area">
-	세션 연장 메시지
-	<button class="control" id="yesBtn">예</button>
-	<button class="control" id="noBtn">아니오</button>
-</div>
+<h4>세션 타이머 : <span id="time-area1" data-ts-timeout="<%=session.getMaxInactiveInterval() %>"></span></h4>
+<h4>세션 타이머 : <span id="time-area2" data-ts-timeout="180"></span></h4>
+<button id="stopBtn">STOP</button>
+
 <script src="<%=request.getContextPath() %>/resources/js/app/11/sessionDesc.js"></script>
 </body>
 </html>
