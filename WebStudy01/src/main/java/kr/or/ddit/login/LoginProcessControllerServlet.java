@@ -21,19 +21,14 @@ public class LoginProcessControllerServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		
+		if(session.isNew()) {
+			resp.sendError(400, "로그인을 하려면 로그인 폼이 먼저 최초의 요청으로 전송되었어야 함.");
+			return;
+		}
 		//1. body 영역의 디코딩에 사용할 chatset 결정
 		req.setCharacterEncoding("UTF-8");
-		//2. 파라미터 받기
-//		String id = req.getParameter("memId");
-//		String password = req.getParameter("memPass");
-		
-		//3. 파라미터 검증
-//		if((id == null || id.isEmpty()) || (password == null || password.isEmpty())) {
-//			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "잘못된 형식의 아이디 또는 비밀번호");
-//			return;
-//		}
-		
+		//2. 파라미터 받기		
+		//3. 파라미터 검증		
 		//	- 검증 통과 -> 4. 인증 여부 판단
 		try {
 			//자바 1.8문법
@@ -45,6 +40,8 @@ public class LoginProcessControllerServlet extends HttpServlet{
 					.filter(pass -> !pass.isEmpty())
 					.orElseThrow(() -> new ResponseStatusException(400, "비밀번호 누락"));
 			if(authenticate(memId, memPass)) {
+//				인증된 사용자 임을 증명하는 상태정보 생성 및 유지
+				session.setAttribute("authId", memId);
 //				성공 -> 웰컴페이지로 이동 - redirect
 				resp.sendRedirect(req.getContextPath() + "/");
 			}else {
@@ -56,11 +53,6 @@ public class LoginProcessControllerServlet extends HttpServlet{
 		}catch(ResponseStatusException e) {
 //			- 불통과 -> 400 상태코드 전송
 			resp.sendError(e.getStatus(), e.getMessage());
-		}
-
-		
-		
-		
-		
+		}		
 	}
 }

@@ -19,13 +19,13 @@
 %>
 </head>
 <body>
-<form action="<%=request.getContextPath() %>/login/loginProcess.do" method="post" enctype="application/x-www-form-urlencoded">
+<form action="j_security_check" method="post" enctype="application/x-www-form-urlencoded">
 	<%
 	String paramId = Optional.ofNullable(request.getParameter("memId"))
 							.orElse("");
 %>
-	<input type="text" name="memId" placeholder="아이디"/>
-	<input type="password" name="memPass" placeholder="비밀번호"/>
+	<input type="text" name="j_username" placeholder="아이디"/>
+	<input type="password" name="j_password" placeholder="비밀번호"/>
 	<button type="submit">로그인</button>
 </form>
 </body>

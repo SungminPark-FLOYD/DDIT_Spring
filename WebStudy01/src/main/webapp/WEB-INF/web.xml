@@ -24,4 +24,26 @@
 		<session-timeout>2</session-timeout>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
+	<login-config>
+	<!-- 인증 방법 종류 정하기 -->
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login/loginForm.jsp</form-login-page>
+			<form-error-page>/login/loginForm.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>MBTI</web-resource-name>
+			<url-pattern>/09/mbti</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<!-- 인가된 사용자 등록 -->
+			<role-name>ROLE_ADMIN</role-name>
+		</auth-constraint>
+		<!-- HTTPS 프로토콜 사용 강제 -->
+<!-- 		<user-data-constraint> -->
+<!-- 			<transport-guarantee>CONFIDENTIAL</transport-guarantee> -->
+<!-- 		</user-data-constraint> -->
+	</security-constraint>
 </web-app>
