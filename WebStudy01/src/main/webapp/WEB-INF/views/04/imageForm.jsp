@@ -1,3 +1,5 @@
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html>
@@ -7,8 +9,22 @@
 				background-color: blue;
 			}
 		</style>
+		<%
+			String image = (String)request.getAttribute("image");
+			if(StringUtils.isNoneBlank(image)){
+		%>
+				<script>
+					document.addEventListener("DOMContentLoaded", () => {
+						document.forms[0].name.value = "<%=image%>";
+						document.forms[0].requestSubmit();
+					})
+				</script>
+		<%
+			}
+		%>
 	</head>
     <body>    	
+
         <form action="${pageContext.request.contextPath}/image.do" method="get">
             <select name="name">
             	${options}

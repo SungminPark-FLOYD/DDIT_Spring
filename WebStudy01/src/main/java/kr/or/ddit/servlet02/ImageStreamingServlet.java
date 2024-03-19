@@ -7,12 +7,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,16 +26,18 @@ import javax.xml.ws.Response;
 @WebServlet("/image.do")
 public class ImageStreamingServlet extends HttpServlet{
 	private ServletContext application;  //톰캣의 유일한 싱글톤
+	private String imageFolderPath;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		application =  getServletContext();
+		imageFolderPath = application.getInitParameter("imageFolder");
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		File imageFolder = new File("D:/00.medias/images");
+		File imageFolder = new File(imageFolderPath);
 		
 		String fileName = req.getParameter("name");		
 		// 파일 이름이 비어있거나 null일 경우 400 Bad Request 응답을 보냄
@@ -42,13 +46,20 @@ public class ImageStreamingServlet extends HttpServlet{
 	        resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "이미지 파일명이 없음");
 	        return;
 	    }
-		
+  	    
 		File imageFile = new File(imageFolder, fileName);
 		if(!imageFile.exists()) {
 			//404에러
 	        resp.sendError(HttpServletResponse.SC_NOT_FOUND, String.format("%s 파일은 없음", fileName));
 	        return;
 		}
+		
+		//쿠키 추가
+	    Cookie cookie = new Cookie("image", URLEncoder.encode(fileName, "UTF-8"));
+	    cookie.setPath(req.getContextPath());
+	    cookie.setMaxAge(60*60*24*2);
+	    resp.addCookie(cookie);
+	    
 		String mime = application.getMimeType(imageFile.getName());
 		System.out.println(mime);
 		//mime.contains() , mime.startWith(), mime.indexOf()

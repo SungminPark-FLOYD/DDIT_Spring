@@ -7,6 +7,14 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	<context-param>
+		<param-name>param1</param-name>
+		<param-value>value1</param-value>
+	</context-param>
+	<context-param>
+		<param-name>imageFolder</param-name>
+		<param-value>D:/00.medias/images</param-value>
+	</context-param>
 	<servlet>
 		<servlet-name>mimeTextDesc</servlet-name>
 		<servlet-class>kr.or.ddit.servlet02.MimeTextDescServlet</servlet-class>
@@ -32,18 +40,18 @@
 			<form-error-page>/login/loginForm.jsp</form-error-page>
 		</form-login-config>
 	</login-config>
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>MBTI</web-resource-name>
-			<url-pattern>/09/mbti</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<!-- 인가된 사용자 등록 -->
-			<role-name>ROLE_ADMIN</role-name>
-		</auth-constraint>
+<!-- 	<security-constraint> -->
+<!-- 		<web-resource-collection> -->
+<!-- 			<web-resource-name>MBTI</web-resource-name> -->
+<!-- 			<url-pattern>/09/mbti</url-pattern> -->
+<!-- 		</web-resource-collection> -->
+<!-- 		<auth-constraint> -->
+ 			<!-- 인가된 사용자 등록 --> 
+<!-- 			<role-name>ROLE_ADMIN</role-name> -->
+<!-- 		</auth-constraint> -->
 		<!-- HTTPS 프로토콜 사용 강제 -->
 <!-- 		<user-data-constraint> -->
 <!-- 			<transport-guarantee>CONFIDENTIAL</transport-guarantee> -->
 <!-- 		</user-data-constraint> -->
-	</security-constraint>
+<!-- 	</security-constraint> -->
 </web-app>
