@@ -21,6 +21,7 @@
 		3. response에 포함시켜 클라이언트로 전송
 		
 		4. 브라우저가 가진 쿠키 저장소에 저장(response header)
+		
 		5. 다음번 요청이 발생할때, 쿠키를 서버로 재전송함.(request header)
 		<%
 			Cookie firstCookie = new Cookie("firstName", "FIRSTVALUE");

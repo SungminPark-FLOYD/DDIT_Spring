@@ -28,7 +28,5 @@ window['mbti-form'].addEventListener("submit", (e)=>{ //[] : 연산배열구조
 		//window['mbti-area'].append(element)
 		window['mbti-area'].innerHTML = html; 
 	})
-	.catch()//리젝트함수
-	
-	
+	.catch()//리젝트함수	
 })
