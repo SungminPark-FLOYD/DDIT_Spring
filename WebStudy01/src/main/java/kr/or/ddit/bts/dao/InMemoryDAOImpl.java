@@ -1,6 +1,7 @@
 package kr.or.ddit.bts.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class InMemoryDAOImpl implements BtsDAO {
 		Object[] values = btsMap.get(code);
 		BtsVO bts = null;
 		if(values != null) {
-			bts = new BtsVO(code, (String)values[0], (String)values[1], (int)values[2]);
+			bts = new BtsVO(code, (String)values[0], (String)values[1], (Integer)values[2]);
 		}
 		return bts;		
 	}
@@ -39,19 +40,25 @@ public class InMemoryDAOImpl implements BtsDAO {
 			String code = entry.getKey();
 			String name = (String)entry.getValue()[0];
 			String path = (String)entry.getValue()[1];
-			int count = (int)entry.getValue()[2];
+			int count = (Integer)entry.getValue()[2];
 			
 			BtsVO vo = new BtsVO(code, name, path, count);
 			btsList.add(vo);
 		}
 		
+		Collections.sort(btsList, new BtsVO().reversed());
 		return btsList;
 	}
 
 	@Override
-	public void incrementHit(BtsVO bts) {
-		bts.setCount(1);	
-		btsMap.put(bts.getCode(), new Object[] {bts.getName(), bts.getPath(), bts.getCount()});
+	public void incrementHit(String code) {
+		Object[] bts = btsMap.get(code);
+		if(bts != null) {
+			int count = (Integer)bts[2];
+			bts[2] = count + 1;
+		}
+			
+		//btsMap.put(bts.getCode(), new Object[] {bts.getName(), bts.getPath(), bts.getCount()});
 	}
 
 }

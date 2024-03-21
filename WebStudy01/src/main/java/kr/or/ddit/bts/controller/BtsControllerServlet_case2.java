@@ -33,7 +33,6 @@ public class BtsControllerServlet_case2 extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		application = getServletContext();
 		ArrayList<BtsVO> btsList =  (ArrayList<BtsVO>) service.readBtsList();		
-		Collections.sort(btsList, new BtsVO().reversed());
 		req.setAttribute("btsList", btsList);
 		String viewName = "/WEB-INF/views/bts/btsForm_case2.jsp";
 		req.getRequestDispatcher(viewName).forward(req, resp);

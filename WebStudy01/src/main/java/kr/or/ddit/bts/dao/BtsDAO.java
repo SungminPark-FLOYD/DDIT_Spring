@@ -28,5 +28,5 @@ public interface BtsDAO {
 	 * 한사람의 멤버가 조회될때 조회수를 증가시킴
 	 * @param code 
 	 */
-	public void incrementHit(BtsVO bts);
+	public void incrementHit(String code);
 }

@@ -16,7 +16,7 @@ public class BtsServiceImpl implements BtsService {
 		if(bts == null) {
 			throw new PkNotFoundException(404);
 		}
-		incrementHit(bts);
+		dao.incrementHit(code);
 		return bts;
 	}
 
@@ -25,9 +25,6 @@ public class BtsServiceImpl implements BtsService {
 		return dao.selectBtsList();
 	}
 
-	@Override
-	public void incrementHit(BtsVO bts) {
-		dao.incrementHit(bts);
-	}
+	
 
 }

@@ -1,8 +1,6 @@
-<%@page import="kr.or.ddit.vo.BtsVO"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="org.omg.PortableInterceptor.ClientRequestInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,19 +9,14 @@
 <jsp:include page="/WEB-INF/includee/preScript.jsp"/>
 </head>
 <body>
-<%
-	ArrayList<BtsVO> btsList = (ArrayList<BtsVO>)request.getAttribute("btsList");
-%>
+
+
 <form method="post" name="btsForm" enctype="application/x-www-form-urlencoded">
 	<select name="member" onchange="this.form.requestSubmit();" required>
 		<option value>선택</option>
-		<%
-			for(BtsVO bts : btsList) {
-				%>
-				<option value="<%=bts.getCode() %>" label="<%=bts.getName()%>"/>
-				<%
-			}
-		%>
+		<c:forEach items="${btsList }" var="bts">
+			<option value="${bts['code']}" label="${bts['name']}"/>
+		</c:forEach>
 	</select>
 </form>
 <div id="bts-area"></div>

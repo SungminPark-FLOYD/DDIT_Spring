@@ -1,7 +1,6 @@
-<%@page import="kr.or.ddit.vo.PersonVo"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
 <%-- 웹에서 기본 컨텐츠 타입으로 사용되는 HTML 컨텐츠를 생성하기 위한 view layer --%>
 <!DOCTYPE html>
@@ -25,7 +24,9 @@
 </style>
 </head>
 <body>
-<form name="personForm" action="<%=request.getContextPath() %>/people.do" method="post">
+<c:set value="${pageContext.request.contextPath }" var="cPath" scope="application"/>
+
+<form name="personForm" action="${cPath }/people.do" method="post">
 	<input type="text" name="who"/>
 </form>
 <table>
@@ -36,17 +37,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<%
-			List<PersonVo> people = (List)request.getAttribute("people");
-			for(PersonVo once : people) {
-				%>
-				<tr>
-					<td><%= once.getId() %></td>
-					<td><a href="javascript:;" onclick="clickHandler(event)" data-member-id="<%= once.getId() %>"><%= once.getName() %></a></td>
-				</tr>
-				<%
-			}
-		%>
+		<c:forEach items="${people }" var="once">
+			<tr>
+				<td>${once['id'] }</td>
+				<td><a href="javascript:;" onclick="clickHandler(event)" data-member-id="${once['id']}">${once['name']}</a></td>
+			</tr>
+		</c:forEach>
 	</tbody>
 </table>
 <div id="detail"></div>

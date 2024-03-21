@@ -23,5 +23,4 @@ public interface BtsService {
 	 */
 	public List<BtsVO> readBtsList();
 	
-	public void incrementHit(BtsVO bts);
 }

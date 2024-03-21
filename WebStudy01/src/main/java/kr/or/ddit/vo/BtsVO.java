@@ -10,7 +10,7 @@ import java.util.Comparator;
  * 3. 캡슐화된 프로퍼티에 대한 인터페이스 제공
  * 4. 상태 비교 방법 제공.
  * 5. 상태 확인 방법 제공
- * 6. 
+ * 6. 직렬화 가능
  */
 public class BtsVO implements Serializable, Comparator<BtsVO>{
 	private String code;
