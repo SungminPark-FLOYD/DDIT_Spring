@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/src/jquery-ui-dependencies/jquery.fancytree.ui-deps.js"></script>
+<link href="${pageContext.request.contextPath }/resources/dist/skin-lion/ui.fancytree.min.css" rel="stylesheet">
 <jsp:include page="/WEB-INF/includee/preScript.jsp"/>
 <style type="text/css">
 	.folder{
@@ -43,9 +46,11 @@ document.addEventListener("dblclick", e =>{
 		</c:forEach>		
 	</ul>
 	
-	<div data-url="<c:url value='/case2/fileInfo'/>" id="right-area" class="card col">
+	<div id="tree" data-url="<c:url value='/case2/fileInfo'/>" class="card col">
 	</div>
 	</div>
+	
+<script src="${pageContext.request.contextPath }/resources/dist/jquery.fancytree-all.min.js"></script>
 <script src="<c:url value='/resources/js/explorer/fileView_case2.js'/>"></script>
 
 <jsp:include page="/WEB-INF/includee/postScript.jsp"/>
