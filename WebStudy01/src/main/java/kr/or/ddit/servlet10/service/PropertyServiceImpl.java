@@ -8,12 +8,11 @@ import kr.or.ddit.servlet10.dao.PropertyDAOImpl;
 import kr.or.ddit.vo.DbVO;
 
 public class PropertyServiceImpl implements PropertyService{
-	private PropertyDAO dao = new PropertyDAOImpl();
-
+//	private PropertyDAO dao = new PropertyDAOImpl();
+	private PropertyDAO dao;
 		@Override
 		public void readProperties(Map<String, Object> paramMap) {
 			dao.selectProperties(paramMap);
-			
 		}
 
 	

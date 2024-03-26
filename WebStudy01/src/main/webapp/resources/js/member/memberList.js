@@ -12,7 +12,7 @@ const cPath = document.body.dataset.url;
 $(function() {
 	const $modal = $("#exampleModal").on("show.bs.modal", function(event) {
 		let tr = event.relatedTarget;
-		let memId = $(tr).data("memId")
+		let memId = $(tr).data("memId") 
 		let url = `${cPath}/member/memberDetail.do`;
 		let method = "get";
 
@@ -53,5 +53,48 @@ $(function() {
 		//html의 dataset을 data형식으로 가져올 수 있따
 //		
 //	})
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+	const modal = document.getElementById("exampleModal");
+
+    modal.addEventListener("show.bs.modal", function(event) {
+        const tr = event.relatedTarget;
+        const memId = tr.dataset.memId;
+        const url = `${cPath}/member/memberDetail.do?who=${memId}`;
+        const method = "GET";
+
+        fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            const member = data.member;
+            console.log(member?.memId);
+            const tdElements = modal.querySelectorAll("td[id]");
+            tdElements.forEach(td => {
+                const propName = td.id;
+                td.innerHTML = member[propName];
+            });
+        })
+        .catch(error => {
+            console.error("Fetch Error:", error);
+        });
+    });
+
+    modal.addEventListener("hidden.bs.modal", function(event) {
+        const tdElements = modal.querySelectorAll("td[id]");
+        tdElements.forEach(td => {
+            td.innerHTML = "";
+        });
+    });
 });
 

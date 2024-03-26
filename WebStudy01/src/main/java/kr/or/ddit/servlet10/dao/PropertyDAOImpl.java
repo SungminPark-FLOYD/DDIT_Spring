@@ -28,6 +28,7 @@ public class PropertyDAOImpl implements PropertyDAO{
 				sql.append("from database_properties                          ");
 				ResultSet rs = stmt.executeQuery(sql.toString());
 				ResultSetMetaData a = rs.getMetaData();
+				
 				int count = a.getColumnCount();
 				String[] headers = new String[count];
 				for(int idx = 1; idx <= count; idx++) {
@@ -46,6 +47,7 @@ public class PropertyDAOImpl implements PropertyDAO{
 					vo.setDescription(description);
 					list.add(vo);
 				}
+				
 				paramMap.put("headers", headers);
 				paramMap.put("list", list);
 				
