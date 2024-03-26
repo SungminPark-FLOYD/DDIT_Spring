@@ -39,9 +39,7 @@ $(function() {
 //		$modal.find("td[id]").each(function(index, td) {
 //			$(td).empty();
 //		})
-	})
-	
-	
+	})	
 	
 	//디센던트 구조
 //	$(document).on('click', 'tr[data-mem-id]', function () {
@@ -53,5 +51,9 @@ $(function() {
 		//html의 dataset을 data형식으로 가져올 수 있따
 //		
 //	})
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	
 });
 
