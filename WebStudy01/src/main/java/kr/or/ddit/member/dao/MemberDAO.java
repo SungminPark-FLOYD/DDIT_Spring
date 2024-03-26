@@ -1,4 +1,4 @@
-package kr.or.ddit.bts.member.dao;
+package kr.or.ddit.member.dao;
 
 import java.util.List;
 
@@ -27,6 +27,18 @@ public interface MemberDAO {
 	 * @return 존재하지 않으면 null 반환
 	 */
 	public MemberVO selectMember(String memId);
-//	update
-//	delete
+	
+	/**
+	 * 회원 정보 수정
+	 * @param vo
+	 * @return 수정된 레코드 수
+	 */
+	public int update(MemberVO vo);
+	
+	/**
+	 * 회원정보 삭제(???)
+	 * @param memId
+	 * @return 삭제(??)된 레코드 수
+	 */
+	public int delete(String memId);
 }

@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import kr.or.ddit.bts.member.dao.MemberDAO;
-import kr.or.ddit.bts.member.dao.MemberDAOImpl;
 import kr.or.ddit.exception.PersistenceException;
+import kr.or.ddit.member.dao.MemberDAO;
+import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
 
 class MemberDAOImplTest {
@@ -16,18 +16,17 @@ class MemberDAOImplTest {
 	@Test
 	void testInsertMember() {
 		MemberVO member = new MemberVO();
-		assertThrows(PersistenceException.class, () -> dao.insertMember(member));
-
+		assertThrows(PersistenceException.class, ()->dao.insertMember(member));
 		member.setMemId("a003");
 		member.setMemPass("java");
-		member.setMemName("테스트");
-		member.setMemZip("0000");
-		member.setMemAdd1("asdasd");
-		member.setMemAdd2("asdasd");
-		member.setMemAdd2("asdasfasf");
-		
-		int cnt = dao.insertMember(member);
-		assertEquals(1, cnt);
+		member.setMemName("테스터");
+		member.setMemZip("00000");
+		member.setMemAdd1("대전 오류");
+		member.setMemAdd2("대덕인재개발원");
+		member.setMemMail("aa@naver.com");
+		member.setMemBir("2024-01-01");
+		int rowcnt = dao.insertMember(member);
+		assertEquals(1, rowcnt);
 	}
 
 	@Test
@@ -47,6 +46,29 @@ class MemberDAOImplTest {
 		
 		String memId = "asdasd' OR '1' = '1";
 		assertNull(dao.selectMember(memId));
+	}
+	
+	@Test
+	void testUpdateMember() {
+		MemberVO member = new MemberVO();
+		assertThrows(PersistenceException.class, ()->dao.update(member));
+		member.setMemId("a003");
+		member.setMemPass("java");
+		member.setMemName("업데이트");
+		member.setMemZip("00000");
+		member.setMemAdd1("대전 오류");
+		member.setMemAdd2("대덕인재개발원");
+		member.setMemMail("aa@naver.com");
+		member.setMemBir("2024-01-01");
+		int rowcnt = dao.update(member);
+		assertEquals(1, rowcnt);
+	}
+	
+	@Test
+	void testDeleteMember() {
+		assertThrows(PersistenceException.class, ()->dao.delete("123"));
+		int rowcnt = dao.delete("a003");
+		assertEquals(1, rowcnt);
 	}
 
 }
