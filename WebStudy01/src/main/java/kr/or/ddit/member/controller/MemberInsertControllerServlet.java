@@ -98,10 +98,6 @@ public class MemberInsertControllerServlet extends HttpServlet{
 		}else {
 			req.getRequestDispatcher(viewName).forward(req, resp); 
 		}
-		
-		
-		
-
 	}
 	
 	private boolean validate(MemberVO member, Map<String, String> errors) {

@@ -39,7 +39,8 @@ public class ConnectionFactory_HikariCP {
 			
 			url = props.getProperty("url");
 			user = props.getProperty("user");
-			password = props.getProperty("password");	
+			password = props.getProperty("password");
+			
 			driverClassName = props.getProperty("driverClassName");
 			
 			config.setDriverClassName(driverClassName);
