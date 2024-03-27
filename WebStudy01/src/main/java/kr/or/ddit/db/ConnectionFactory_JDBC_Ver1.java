@@ -14,7 +14,7 @@ import java.util.Properties;
  * 	: 객체의 생성을 전담하는 객체를 별도 운영하는 구조
  *
  */
-public class ConnectionFactory {
+public class ConnectionFactory_JDBC_Ver1 {
 	
 	private static String url;
 	private static String user;
@@ -23,7 +23,7 @@ public class ConnectionFactory {
 	static {
 		
 		try(
-			InputStream is = ConnectionFactory.class.getResourceAsStream("./DbInfo.properties");
+			InputStream is = ConnectionFactory_JDBC_Ver1.class.getResourceAsStream("./DbInfo.properties");
 		) {
 			Properties props = new Properties();
 			props.load(is);

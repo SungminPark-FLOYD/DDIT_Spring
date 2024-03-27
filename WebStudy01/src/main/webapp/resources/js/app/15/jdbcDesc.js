@@ -23,7 +23,7 @@ document,addEventListener("DOMContentLoaded", () => {
 			
 			let trTags = `<tr>${list.map(d => `<td>${d.propertyName}</td>
 												<td>${d.propertyValue}</td>
-												<td>${d.description}</td>`)}</tr>`
+												<td>${d.description}</td>`)}</tr>`;
 			
 						
 			let code1 = "";

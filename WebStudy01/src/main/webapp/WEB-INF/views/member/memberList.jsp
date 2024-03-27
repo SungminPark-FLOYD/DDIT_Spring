@@ -102,6 +102,7 @@
   </div>
 </div>
 
+<a href="${pageContext.request.contextPath }/member/memberInsert.do">회원등록</a>
 <table class="table table-bordered table-striped" >
 	<thead class="table-dark">
 		<tr>
@@ -113,10 +114,11 @@
 			<th>마일리지</th>
 		</tr>		
 	</thead>
-	
+	<tbody>
 		<c:if test="${not empty memberList }">
 		<c:forEach items="${memberList }" var="mem" >
-			<tr data-mem-id="${mem.memId }" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		<c:set value="${mem .memId eq lastCreated.memId ? 'active' : ''}" var="clzValue"/>
+			<tr class="${clzValue }" data-mem-id="${mem.memId }" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				<td>${mem.memName }</td>
 				<td>${mem.memAdd1 }</td>
 				<td>${mem.memAdd2 }</td>
@@ -131,7 +133,8 @@
 				<td colspan="6">회원 정보 없음</td>
 			</tr>
 		</c:if>
-	<tbody>
+		<!-- 세션 삭제 -->
+		<c:remove var="lastCreated" scope="session"/>
 	</tbody>
 </table>
 

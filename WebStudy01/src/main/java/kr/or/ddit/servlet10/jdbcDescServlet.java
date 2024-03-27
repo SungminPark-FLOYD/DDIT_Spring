@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.util.ParameterMap;
 
-import kr.or.ddit.db.ConnectionFactory;
 import kr.or.ddit.exception.PersistenceException;
 import kr.or.ddit.servlet10.service.PropertyService;
 import kr.or.ddit.servlet10.service.PropertyServiceImpl;

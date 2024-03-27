@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.or.ddit.db.ConnectionFactory;
+import kr.or.ddit.db.ConnectionFactory_HikariCP;
 import kr.or.ddit.exception.PersistenceException;
 import kr.or.ddit.utils.NamingUtils;
 import kr.or.ddit.vo.DbVO;
@@ -64,7 +64,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" 	    ?                  ");
 		sql.append(" 	)                      ");
 		try(
-			Connection conn = ConnectionFactory.getConnection();	
+			Connection conn = ConnectionFactory_HikariCP.getConnection();	
 //			Statement stmt = conn.createStatement();	
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		){
@@ -117,7 +117,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" FROM MEMBER                                    ");
 		
 		try (
-			Connection conn = ConnectionFactory.getConnection(); 
+			Connection conn = ConnectionFactory_HikariCP.getConnection(); 
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			) {
 			
@@ -160,7 +160,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" FROM MEMBER                                    ");
 		sql.append(" WHERE MEM_ID = ?                         ");
 		try (
-			Connection conn = ConnectionFactory.getConnection(); 
+			Connection conn = ConnectionFactory_HikariCP.getConnection(); 
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			) {
 			
@@ -229,7 +229,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("WHERE                       ");
 		sql.append("    mem_id =?            ");
 		try(
-			Connection conn = ConnectionFactory.getConnection();	
+			Connection conn = ConnectionFactory_HikariCP.getConnection();	
 //			Statement stmt = conn.createStatement();	
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		){
@@ -274,7 +274,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("WHERE               ");
 		sql.append("    mem_id = ?      ");
 		try(
-			Connection conn = ConnectionFactory.getConnection();	
+			Connection conn = ConnectionFactory_HikariCP.getConnection();	
 //			Statement stmt = conn.createStatement();	
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		){

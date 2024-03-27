@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.db.ConnectionFactory;
+import kr.or.ddit.db.ConnectionFactory_JDBC_Ver1;
 import kr.or.ddit.exception.PersistenceException;
 import kr.or.ddit.utils.NamingUtils;
 import kr.or.ddit.vo.DbVO;
@@ -19,7 +19,7 @@ public class PropertyDAOImpl implements PropertyDAO{
 	@Override
 	public List<DbVO> selectProperties(Map<String, Object> paramMap) {
 		try(
-				Connection conn = ConnectionFactory.getConnection();
+				Connection conn = ConnectionFactory_JDBC_Ver1.getConnection();
 				Statement stmt = conn.createStatement();
 			) {
 				StringBuffer sql = new StringBuffer();
@@ -28,6 +28,7 @@ public class PropertyDAOImpl implements PropertyDAO{
 				sql.append("from database_properties                          ");
 				ResultSet rs = stmt.executeQuery(sql.toString());
 				ResultSetMetaData a = rs.getMetaData();
+				
 				int count = a.getColumnCount();
 				String[] headers = new String[count];
 				for(int idx = 1; idx <= count; idx++) {
@@ -46,6 +47,7 @@ public class PropertyDAOImpl implements PropertyDAO{
 					vo.setDescription(description);
 					list.add(vo);
 				}
+				
 				paramMap.put("headers", headers);
 				paramMap.put("list", list);
 				

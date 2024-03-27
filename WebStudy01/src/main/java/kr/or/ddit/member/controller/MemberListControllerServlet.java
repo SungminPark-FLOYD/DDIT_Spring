@@ -16,7 +16,7 @@ import kr.or.ddit.vo.MemberVO;
 
 
 /**
- * C : /member/memberInset.do(GET, POST)
+ * C : /member/memberInsert.do(GET, POST)
  * R (GET)
  * 단건 : /member/memberDetail.do?who=a001 
  * 다건 : /member/memberList.do

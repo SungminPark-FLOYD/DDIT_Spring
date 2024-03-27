@@ -12,8 +12,13 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao = new MemberDAOImpl();
 	@Override
 	public ServiceResult createMember(MemberVO member) {
-		// TODO Auto-generated method stub
-		return null;
+		ServiceResult result = null;
+		if(dao.selectMember(member.getMemId()) != null) return result = ServiceResult.PKDUPLICATED;
+		
+		int cnt = dao.insertMember(member);
+		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		
+		return result;
 	}
 
 	@Override
