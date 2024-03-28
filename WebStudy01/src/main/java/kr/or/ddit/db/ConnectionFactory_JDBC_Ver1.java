@@ -20,6 +20,8 @@ public class ConnectionFactory_JDBC_Ver1 {
 	private static String user;
 	private static String password;
 
+	//드라이버를 로딩하는 위치가 달라서 드라이버가 언제 로딩되는지 알 수 없다
+	//커넥션 풀링을 안쓰기 때문에 사용량이 늘어나면 커넥션에 과부하가 일어난다
 	static {
 		
 		try(

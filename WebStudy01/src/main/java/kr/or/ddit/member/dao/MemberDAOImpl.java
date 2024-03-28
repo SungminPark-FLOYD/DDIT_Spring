@@ -1,5 +1,6 @@
 package kr.or.ddit.member.dao;
 
+import java.beans.PropertyDescriptor;
 import java.sql.Connection;
 import java.sql.JDBCType;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ import kr.or.ddit.vo.DbVO;
 import kr.or.ddit.vo.MemberVO;
 
 public class MemberDAOImpl implements MemberDAO {
-
+	//1, 4, 7번 동작은 각각다르다 -> 추상
 	@Override
 	public int insertMember(MemberVO member) {
 		StringBuffer sql = new StringBuffer();
@@ -101,7 +102,39 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 			
 	}
-	
+	//Class<T> : 제네릭 문법의 타입변수를 선언
+	//호출될때 받은 파라미터의 타입에 따라서 리턴타입이 런타임에 결정된다
+	private <T> T resultSetToObject(ResultSet rs, Class<T> resultType) throws SQLException {
+		try {
+			ResultSetMetaData rsmd = rs.getMetaData();
+			//조회한 컬럼 개수 확인
+			int count = rsmd.getColumnCount();
+			
+			//클래스에 해당하는 오브젝트 가져오기
+			//만약 기본생성자가 없는 VO가 있다면 mybatis에서는 사용할 수 없다
+			T result = resultType.newInstance();
+			
+			for(int i=1; i<= count; i++) {
+				// sname 케이스의 컬럼명 가져오기
+				String snake = rsmd.getColumnName(i);
+				//Camel 케이스 변환
+				String propName = NamingUtils.snakeToCamel(snake);
+				PropertyDescriptor pd = new PropertyDescriptor(propName, resultType);
+				//전역변수 타입 가져오기
+				Object value = null;
+				if(pd.getPropertyType().equals(String.class)) {
+					value = rs.getString(snake);
+				}else {
+					value = rs.getLong(snake);
+				}
+//				setter 호출
+				pd.getWriteMethod().invoke(result, value);
+			}
+			return result;
+		}catch (Exception e) {
+			throw new SQLException(e);
+		}
+	}
 
 	@Override
 	public List<MemberVO> selectMemberList() {
@@ -125,14 +158,15 @@ public class MemberDAOImpl implements MemberDAO {
 			
 			List<MemberVO> list = new ArrayList<MemberVO>();
 			while (rs.next()) {
-				MemberVO member = new MemberVO();
-				member.setMemId(rs.getString("MEM_ID"));
-				member.setMemName(rs.getString("MEM_NAME"));
-				member.setMemAdd1(rs.getString("MEM_ADD1"));
-				member.setMemAdd2(rs.getString("MEM_ADD2"));
-				member.setMemHp(rs.getString("MEM_HP"));
-				member.setMemMail(rs.getString("MEM_MAIL"));
-				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
+				MemberVO member = resultSetToObject(rs, MemberVO.class);
+				
+//				member.setMemId(rs.getString("MEM_ID"));
+//				member.setMemName(rs.getString("MEM_NAME"));
+//				member.setMemAdd1(rs.getString("MEM_ADD1"));
+//				member.setMemAdd2(rs.getString("MEM_ADD2"));
+//				member.setMemHp(rs.getString("MEM_HP"));
+//				member.setMemMail(rs.getString("MEM_MAIL"));
+//				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
 				list.add(member);
 			}
 
@@ -170,26 +204,26 @@ public class MemberDAOImpl implements MemberDAO {
 			
 			MemberVO member = null;
 			if (rs.next()) {
-				member = new MemberVO();
-				member.setMemId(rs.getString("MEM_ID"));
-				member.setMemPass(rs.getString("MEM_PASS"));
-				member.setMemName(rs.getString("MEM_NAME"));
-				member.setMemRegno1(rs.getString("MEM_REGNO1"));
-				member.setMemRegno2(rs.getString("MEM_REGNO2"));
-				member.setMemBir(rs.getString("MEM_BIR"));
-				member.setMemZip(rs.getString("MEM_ZIP"));
-				member.setMemAdd1(rs.getString("MEM_ADD1"));
-				member.setMemAdd2(rs.getString("MEM_ADD2"));
-				member.setMemHometel(rs.getString("MEM_HOMETEL"));
-				member.setMemComtel(rs.getString("MEM_COMTEL"));
-				member.setMemHp(rs.getString("MEM_HP"));
-				member.setMemMail(rs.getString("MEM_MAIL"));
-				member.setMemJob(rs.getString("MEM_JOB"));
-				member.setMemLike(rs.getString("MEM_LIKE"));
-				member.setMemMemorial(rs.getString("MEM_MEMORIAL"));
-				member.setMemMemorialday(rs.getString("MEM_MEMORIALDAY"));
-				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
-				member.setMemDelete(rs.getString("MEM_DELETE"));
+				member = resultSetToObject(rs, MemberVO.class);
+//				member.setMemId(rs.getString("MEM_ID"));
+//				member.setMemPass(rs.getString("MEM_PASS"));
+//				member.setMemName(rs.getString("MEM_NAME"));
+//				member.setMemRegno1(rs.getString("MEM_REGNO1"));
+//				member.setMemRegno2(rs.getString("MEM_REGNO2"));
+//				member.setMemBir(rs.getString("MEM_BIR"));
+//				member.setMemZip(rs.getString("MEM_ZIP"));
+//				member.setMemAdd1(rs.getString("MEM_ADD1"));
+//				member.setMemAdd2(rs.getString("MEM_ADD2"));
+//				member.setMemHometel(rs.getString("MEM_HOMETEL"));
+//				member.setMemComtel(rs.getString("MEM_COMTEL"));
+//				member.setMemHp(rs.getString("MEM_HP"));
+//				member.setMemMail(rs.getString("MEM_MAIL"));
+//				member.setMemJob(rs.getString("MEM_JOB"));
+//				member.setMemLike(rs.getString("MEM_LIKE"));
+//				member.setMemMemorial(rs.getString("MEM_MEMORIAL"));
+//				member.setMemMemorialday(rs.getString("MEM_MEMORIALDAY"));
+//				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
+//				member.setMemDelete(rs.getString("MEM_DELETE"));
 				
 			}
 

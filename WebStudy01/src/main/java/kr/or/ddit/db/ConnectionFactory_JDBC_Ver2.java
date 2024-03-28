@@ -25,6 +25,7 @@ public class ConnectionFactory_JDBC_Ver2 {
 	private static String password;
 	private static DataSource dataSource;
 
+	//드라이버 로딩문제는 해결했지만 커넥션 풀링을 사용하지 않음
 	static {
 		
 		try(

@@ -28,6 +28,7 @@ public class ConnectionFactory_HikariCP {
 	private static DataSource dataSource;
 	private static String driverClassName;
 
+	//Hikari를 사용하여 특정 DB에대한 종속성을 해결했다
 	static {
 		
 		try(

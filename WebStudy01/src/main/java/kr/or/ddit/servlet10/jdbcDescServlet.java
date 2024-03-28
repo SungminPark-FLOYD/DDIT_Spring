@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.util.ParameterMap;
 
 import kr.or.ddit.exception.PersistenceException;
 import kr.or.ddit.servlet10.service.PropertyService;

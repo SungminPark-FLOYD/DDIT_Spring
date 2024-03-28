@@ -28,6 +28,9 @@ public class ConnectionFactory_JDBC_Ver3 {
 	private static DataSource dataSource;
 	private static PooledConnection pc;
 
+	//커넥션 풀링사용
+	//전체 어플리케이션의 소요시간 단축
+	//DB서버의 세션 부하도 일정하게 관리 가능
 	static {
 		
 		try(
