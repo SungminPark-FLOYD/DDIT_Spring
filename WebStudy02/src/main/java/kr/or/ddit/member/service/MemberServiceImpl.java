@@ -36,14 +36,22 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ServiceResult modifyMember(MemberVO member) throws PkNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		ServiceResult result = null;
+		if(!dao.selectMember(member.getMemId()).getMemPass().equals(member.getMemPass())) return result = ServiceResult.INVALIDPASSWORD;
+		
+		int cnt = dao.update(member);
+		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		return result;
 	}
 
 	@Override
 	public ServiceResult removeMember(MemberVO inputData) throws PkNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		ServiceResult result = null;
+		if(!dao.selectMember(inputData.getMemId()).getMemPass().equals(inputData.getMemPass())) return result = ServiceResult.INVALIDPASSWORD;
+		
+		int cnt = dao.delete(inputData.getMemId());
+		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		return result;
 	}
 
 }

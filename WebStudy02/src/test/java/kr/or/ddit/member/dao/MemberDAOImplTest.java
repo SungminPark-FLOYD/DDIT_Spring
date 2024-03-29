@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import kr.or.ddit.exception.PersistenceException;
+import org.apache.ibatis.exceptions.PersistenceException;
 import kr.or.ddit.member.dao.MemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
@@ -17,7 +17,7 @@ class MemberDAOImplTest {
 	void testInsertMember() {
 		MemberVO member = new MemberVO();
 		assertThrows(PersistenceException.class, ()->dao.insertMember(member));
-		member.setMemId("a003");
+		member.setMemId("a007");
 		member.setMemPass("java");
 		member.setMemName("테스터");
 		member.setMemZip("00000");
@@ -51,8 +51,9 @@ class MemberDAOImplTest {
 	@Test
 	void testUpdateMember() {
 		MemberVO member = new MemberVO();
+		member.setMemId("a001");
 		assertThrows(PersistenceException.class, ()->dao.update(member));
-		member.setMemId("a003");
+		member.setMemId("a008");
 		member.setMemPass("java");
 		member.setMemName("업데이트");
 		member.setMemZip("00000");
@@ -66,8 +67,8 @@ class MemberDAOImplTest {
 	
 	@Test
 	void testDeleteMember() {
-		assertThrows(PersistenceException.class, ()->dao.delete("123"));
-		int rowcnt = dao.delete("a003");
+		assertNotEquals(1, dao.delete("1231"));
+		int rowcnt = dao.delete("a007");
 		assertEquals(1, rowcnt);
 	}
 

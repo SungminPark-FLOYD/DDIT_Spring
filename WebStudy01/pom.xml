@@ -49,15 +49,10 @@
 	    <version>1.2</version>
 	</dependency>
 <!-- 	데이터 베이스 연결용 -->
-<!-- 	<dependency> -->
-<!-- 	    <groupId>com.oracle.database.jdbc</groupId> -->
-<!-- 	    <artifactId>ojdbc8</artifactId> -->
-<!-- 	    <version>23.2.0.0</version> -->
-<!-- 	</dependency> -->
 	<dependency>
 	    <groupId>com.oracle.database.jdbc</groupId>
-	    <artifactId>ojdbc6</artifactId>
-	    <version>11.2.0.4</version>
+	    <artifactId>ojdbc8</artifactId>
+	    <version>21.13.0.0</version>
 	</dependency>
 <!-- 	Connection Pooling 지원용 -->
 	<dependency>

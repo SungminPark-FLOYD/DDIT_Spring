@@ -66,7 +66,7 @@ public class MemberInsertControllerServletSub extends HttpServlet{
 		member.setMemMemorial(memMemorial);
 		member.setMemMemorialday(memMemorialday);
 		member.setMemMileage(memMileage);
-		member.setMemDelete(memDelete);
+//		member.setMemDelete(memDelete);
 		
 		ServiceResult sr = service.createMember(member);
 		HttpSession session = req.getSession(); 

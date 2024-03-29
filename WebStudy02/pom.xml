@@ -7,6 +7,7 @@
   <properties>
   	<java-version>1.8</java-version>
   	<com.fasterxml.jackson-version>2.16.1</com.fasterxml.jackson-version>
+  	<org.apache.logging.log4j-version>2.23.1</org.apache.logging.log4j-version>
   </properties>
   <build>
     <plugins>
@@ -49,21 +50,23 @@
 	    <version>1.2</version>
 	</dependency>
 <!-- 	데이터 베이스 연결용 -->
-<!-- 	<dependency> -->
-<!-- 	    <groupId>com.oracle.database.jdbc</groupId> -->
-<!-- 	    <artifactId>ojdbc8</artifactId> -->
-<!-- 	    <version>23.2.0.0</version> -->
-<!-- 	</dependency> -->
 	<dependency>
 	    <groupId>com.oracle.database.jdbc</groupId>
-	    <artifactId>ojdbc6</artifactId>
-	    <version>11.2.0.4</version>
+	    <artifactId>ojdbc8</artifactId>
+	    <version>21.13.0.0</version>
 	</dependency>
+
 <!-- 	Connection Pooling 지원용 -->
 	<dependency>
 	    <groupId>com.zaxxer</groupId>
 	    <artifactId>HikariCP</artifactId>
 	    <version>4.0.3</version>
+	    <exclusions>
+	    	<exclusion>
+	    		<groupId>org.slf4j</groupId>
+	    		<artifactId>slf4j-api</artifactId>
+	    	</exclusion>
+	    </exclusions>
 	</dependency>
 <!-- 	Sql Mapper, Data Mapper, Persistence framework, ORM -->
 	<dependency>
@@ -81,6 +84,12 @@
 	    <groupId>commons-beanutils</groupId>
 	    <artifactId>commons-beanutils</artifactId>
 	    <version>1.9.4</version>
+	    <exclusions>
+	    	<exclusion>
+	    		<groupId>commons-logging</groupId>
+	    		<artifactId>commons-logging</artifactId>
+	    	</exclusion>
+	    </exclusions>
 	</dependency>
 <!-- 	Json 마샬링 지원용 -->
 	<dependency>
@@ -93,6 +102,39 @@
 	    <groupId>com.fasterxml.jackson.dataformat</groupId>
 	    <artifactId>jackson-dataformat-xml</artifactId>
 	    <version>${com.fasterxml.jackson-version}</version>
+	</dependency>
+<!-- 	javaBean 규약 지원용 -->
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.18.32</version>
+		<scope>provided</scope>
+	</dependency>
+<!-- 	logging 지원용 -->
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-api</artifactId>
+	    <version>${org.apache.logging.log4j-version}</version>
+  	</dependency>
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-core</artifactId>
+	    <version>${org.apache.logging.log4j-version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-slf4j-impl</artifactId>
+	    <version>${org.apache.logging.log4j-version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>jcl-over-slf4j</artifactId>
+	    <version>1.7.36</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+	    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+	    <version>1.16</version>
 	</dependency>
 <!-- 	Test 용 -->
 	<dependency>

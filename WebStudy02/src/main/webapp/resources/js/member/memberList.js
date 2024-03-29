@@ -15,7 +15,10 @@ $(function() {
 		let memId = $(tr).data("memId") 
 		let url = `${cPath}/member/memberDetail.do`;
 		let method = "get";
-
+		
+		$('button.btn.btn-primary').on('click', function() {				
+			location.href = `${cPath}/member/memberUpdate.do?who=${memId}`;
+		})
 		$.ajax({
 			url :url ,
 			method :method, 
@@ -54,6 +57,12 @@ $(function() {
 //		//html의 dataset을 data형식으로 가져올 수 있따
 //		
 //	})
+
+	$('button.btn.btn-primary').on('click', function() {
+		let memId = $('#memId').val();
+		console.log(memId)
+		location.href = `${cPath}/member/memberUpdate.do?who=${memId}`;
+	})
 });
 
 //document.addEventListener('DOMContentLoaded', function() {

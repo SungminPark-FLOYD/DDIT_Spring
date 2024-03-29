@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -24,13 +28,20 @@ import kr.or.ddit.vo.MemberVO;
  * D : /member/memberDelete.do(POST)
  *
  */
+@Slf4j
 @WebServlet("/member/memberList.do")
 public class MemberListControllerServlet extends HttpServlet{
+	//로거 설정파일에 있는 이름을 따라간다. -> 패키지에있는 구조를 따라서 클래스를 넘겨주면 알아서 찾아간다
+//	private static final Logger logger = LoggerFactory.getLogger(MemberListControllerServlet.class);
+	
 	private MemberService service = new MemberServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
+		log.info("컨트롤러 동작");
 		req.setCharacterEncoding("utf-8");
 		List<MemberVO> memberList = service.retrieveMemberList();
+		//메시지 arg
+		log.info("조회된 모델 : {}", memberList);
 		req.setAttribute("memberList", memberList);
 		
 		String accept = req.getHeader("accept");
