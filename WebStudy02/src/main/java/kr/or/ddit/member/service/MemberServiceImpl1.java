@@ -4,19 +4,12 @@ import java.util.List;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.exception.PkNotFoundException;
-import kr.or.ddit.login.AuthenticateException;
-import kr.or.ddit.login.BadCredentialException;
-import kr.or.ddit.login.UserNotFoundException;
-import kr.or.ddit.login.service.AuthenticateService;
-import kr.or.ddit.login.service.AuthenticateServiceImpl;
 import kr.or.ddit.member.dao.MemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
 
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl1 implements MemberService {
 	private MemberDAO dao = new MemberDAOImpl();
-	private AuthenticateService authService = new AuthenticateServiceImpl();
-	
 	@Override
 	public ServiceResult createMember(MemberVO member) {
 		ServiceResult result = null;
@@ -43,25 +36,22 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ServiceResult modifyMember(MemberVO member) throws PkNotFoundException {
-		//나머지는 runtimeexception이기 때문에 따로 처리를 하지 않아도 된다
-		try {
-			authService.authenticate(member);
-			return dao.update(member) > 0 ? ServiceResult.OK : ServiceResult.FAIL;
-		}catch (BadCredentialException e) {
-			return ServiceResult.INVALIDPASSWORD;
-		}
+		ServiceResult result = null;
+		if(!dao.selectMember(member.getMemId()).getMemPass().equals(member.getMemPass())) return result = ServiceResult.INVALIDPASSWORD;
 		
+		int cnt = dao.update(member);
+		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		return result;
 	}
 
 	@Override
 	public ServiceResult removeMember(MemberVO inputData) throws PkNotFoundException {
-		//나머지는 runtimeexception이기 때문에 따로 처리를 하지 않아도 된다
-		try {
-			authService.authenticate(inputData);
-			return dao.delete(inputData.getMemId()) > 0 ? ServiceResult.OK : ServiceResult.FAIL;
-		}catch (BadCredentialException e) {
-			return ServiceResult.INVALIDPASSWORD;
-		}
+		ServiceResult result = null;
+		if(!dao.selectMember(inputData.getMemId()).getMemPass().equals(inputData.getMemPass())) return result = ServiceResult.INVALIDPASSWORD;
+		
+		int cnt = dao.delete(inputData.getMemId());
+		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		return result;
 	}
 
 }

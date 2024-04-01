@@ -78,8 +78,8 @@ public class MemberInsertControllerServlet extends HttpServlet{
 				viewName = "/WEB-INF/views/member/memberForm.jsp";
 				break;
 			case OK:
-				req.getSession().setAttribute("lastCreated", member);
-				viewName = "redirect:/member/memberList.do";
+//				req.getSession().setAttribute("lastCreated", member);
+				viewName = "redirect:/";
 				break;
 			}
 			// 4. scope를 이용해 model 공유

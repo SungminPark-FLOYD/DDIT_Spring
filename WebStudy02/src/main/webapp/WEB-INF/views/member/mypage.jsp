@@ -6,18 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
-<c:if test="${not empty message}">
-	<script type="text/javascript">
-		alert("${message}");
+<c:if test="${not empty message }">
+	<script>
+		alert("${message}")
 	</script>
 	<c:remove var="message" scope="session"/>
 </c:if>
+<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
 </head>
 <body>
-
-<form method="post" enctype="application/x-www-form-urlencoded">
-	<table class="table table-bordered">
+<h4>${member.memName }의 마이페이지</h4>
+<table class="table table-bordered">
 			<tr>
 				<th>회원번호</th>
 				<td><input type="text" name="memId" 
@@ -129,13 +128,40 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button type="submit">전송</button>
-					<button type="reset">취소</button>
+					<button type="button" class="btn btn-primary" id="updateBtn" >수정하기</button>
+					<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" >탈퇴</button>
 				</td>
 			</tr>
-		</table>
-</form>
+			
+
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     	<form id="deleteForm" method="post" action="${pageContext.request.contextPath }/member/memberDelete.do">
+      <div class="modal-body">
+				<input type="password" name="password" required/>
+      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-danger">탈퇴</button>
+     </div>
+	</form>
+    </div>
+  </div>
+</div>
+<script>
+	const $updateBtn = $('#updateBtn').on('click', function() {
+		let who = $(this).data("who");
+		location.href = `${pageContext.request.contextPath}/member/memberUpdate.do`;
+	})
+</script>
 <jsp:include page="/WEB-INF/includee/postScript.jsp"/>
-<script src='<c:url value="/resources/js/member/memberForm.js"/>'></script>
 </body>
 </html>

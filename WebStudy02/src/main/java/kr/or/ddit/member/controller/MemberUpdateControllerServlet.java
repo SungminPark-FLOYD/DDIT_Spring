@@ -10,9 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import com.ctc.wstx.util.StringUtil;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
@@ -24,13 +27,29 @@ public class MemberUpdateControllerServlet extends HttpServlet{
 	private MemberService service = new MemberServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
-		MemberVO member = new MemberVO(); //command Object 
-		member = service.retrieveMember(req.getParameter("who"));
-		req.setAttribute("member", member);
-
-		String viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
-		req.getRequestDispatcher(viewName).forward(req, resp);		
+		HttpSession session = req.getSession();
+		if(session.isNew()) {
+			resp.sendError(400);
+			return;
+		}
+		MemberVO authMember =(MemberVO) session.getAttribute("authMember");
+		
+		String viewName = null;
+		if(authMember == null) {
+			viewName = "redirect:/login/loginForm.jsp";
+		}else {
+			MemberVO member = service.retrieveMember(authMember.getMemId());
+			req.setAttribute("member", member);
+			viewName = "/WEB-INF/views/member/memberForm.jsp";
+		}
+		
+		//모든 컨트롤러에 다 적용시킬 수 있다
+		if(viewName.startsWith("redirect:")) {
+			String location = viewName.replace("redirect:", req.getContextPath());
+			resp.sendRedirect(location);
+		}else {
+			req.getRequestDispatcher(viewName).forward(req, resp);
+		}	
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,21 +79,21 @@ public class MemberUpdateControllerServlet extends HttpServlet{
 			switch (result) {
 			case INVALIDPASSWORD:
 				req.setAttribute("message", "비밀번호인증실패");
-				viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
+				viewName = "/WEB-INF/views/member/memberForm.jsp";
 				break;
 			case FAIL:
 				req.setAttribute("message", "서버 오류");
-				viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
+				viewName = "/WEB-INF/views/member/memberForm.jsp";
 				break;
 			case OK:
-				req.getSession().setAttribute("lastCreated", member);
-				viewName = "redirect:/member/memberList.do";
+//				req.getSession().setAttribute("lastCreated", member);
+				viewName = "redirect:/mypage";
 				break;
 			}
 			// 4. scope를 이용해 model 공유
 			
 		}else {
-			viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
+			viewName = "/WEB-INF/views/member/memberForm.jsp";
 		}
 //		 * 5. view 결정
 //		 * 6. view로 이동(flow control)

@@ -30,6 +30,16 @@ public class LogoutControllerServlet extends HttpServlet{
 		//URL 인코딩 하는 방법
 		String message = "로그아웃 성공.";
 		message = URLEncoder.encode(message, "UTF-8");
-		resp.sendRedirect(req.getContextPath() + "/?message=" + message);
+//		resp.sendRedirect(req.getContextPath() + "/?message=" + message);
+		String viewName = "redirect:/?message="+ message;
+//		 * 6. view로 이동(flow control)
+		
+		//모든 컨트롤러에 다 적용시킬 수 있다
+		if(viewName.startsWith("redirect:")) {
+			String location = viewName.replace("redirect:", req.getContextPath());
+			resp.sendRedirect(location);
+		}else {
+			req.getRequestDispatcher(viewName).forward(req, resp); 
+		}
 	}
 }

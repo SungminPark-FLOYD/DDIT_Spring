@@ -19,7 +19,7 @@ import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.vo.MemberVO;
 
-@WebServlet("/member/memberDelete.do")
+//@WebServlet("/member/memberDelete.do")
 public class MemberDeleteController extends HttpServlet{
 	private MemberService service = new MemberServiceImpl();
 	@Override

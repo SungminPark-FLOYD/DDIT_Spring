@@ -16,9 +16,6 @@ $(function() {
 		let url = `${cPath}/member/memberDetail.do`;
 		let method = "get";
 		
-		$('button.btn.btn-primary').on('click', function() {				
-			location.href = `${cPath}/member/memberUpdate.do?who=${memId}`;
-		})
 		$.ajax({
 			url :url ,
 			method :method, 
@@ -31,7 +28,8 @@ $(function() {
 				$modal.find("td[id]").each(function(index, td) {
 					let propName = td.id;
 					td.innerHTML = member[propName];
-				})
+				});
+				$updateBtn.data("who", member.memId);
 			},
 			error:function(jqXHR, status, errorText) {
 				console.log(jqXHR,status, errorText);
@@ -39,6 +37,7 @@ $(function() {
 		});
 	}).on("hidden.bs.modal", function(event) {
 		$modal.find("td[id]").html("");
+		$updateBtn.removeData("who");
 //		$modal.find("td[id]").each(function(index, td) {
 //			$(td).empty();
 //		})
@@ -58,11 +57,7 @@ $(function() {
 //		
 //	})
 
-	$('button.btn.btn-primary').on('click', function() {
-		let memId = $('#memId').val();
-		console.log(memId)
-		location.href = `${cPath}/member/memberUpdate.do?who=${memId}`;
-	})
+	
 });
 
 //document.addEventListener('DOMContentLoaded', function() {
