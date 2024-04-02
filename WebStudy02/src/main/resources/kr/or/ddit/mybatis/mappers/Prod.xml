@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.prod.dao.ProdDAO">
+	<resultMap type="ProdVO" id="prodMap" autoMapping="true">
+		<association property="buyer" javaType="BuyerVO" autoMapping="true"/>
+		<association property="lprod" javaType="LprodVO" autoMapping="true"/>
+<!-- 			<result property="buyerName" column="BUYER_NAME"/> -->
+<!-- 		</association> -->
+	</resultMap>
+	<select id="selectProdList" resultMap="prodMap">
+	SELECT
+		    PROD_ID
+		    , PROD_NAME
+		    , PROD_LGU
+		    , PROD_BUYER
+		    , PROD_COST
+		    , PROD_PRICE
+		    , PROD_INSDATE
+		    , PROD_MILEAGE
+	        , BUYER_NAME
+	        , LPROD_NM
+		FROM
+		    PROD INNER JOIN BUYER ON(PROD_BUYER = BUYER_ID)
+	            INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
+	</select>
+	<select id="selectProd" resultMap="prodMap" parameterType="string">
+		SELECT
+			PROD_ID
+			,PROD_NAME
+			,PROD_LGU
+			,PROD_BUYER
+			,PROD_COST
+			,PROD_PRICE
+			,PROD_SALE
+			,PROD_OUTLINE
+			,PROD_DETAIL
+			,PROD_IMG
+			,PROD_TOTALSTOCK
+			,PROD_INSDATE
+			,PROD_PROPERSTOCK
+			,PROD_SIZE
+			,PROD_COLOR
+			,PROD_DELIVERY
+			,PROD_UNIT
+			,PROD_QTYIN
+			,PROD_QTYSALE
+			,PROD_MILEAGE
+			,LPROD_ID
+			,LPROD_GU
+			,LPROD_NM
+			,BUYER_ID
+			,BUYER_NAME
+			,BUYER_LGU
+			,BUYER_BANK
+			,BUYER_BANKNO
+			,BUYER_BANKNAME
+			,BUYER_ZIP
+			,BUYER_ADD1
+			,BUYER_ADD2
+			,BUYER_COMTEL
+			,BUYER_FAX
+			,BUYER_MAIL
+			,BUYER_CHARGER
+			,BUYER_TELEXT			
+		FROM
+		    PROD INNER JOIN BUYER ON(PROD_BUYER = BUYER_ID)
+	            INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
+	    WHERE PROD_ID = #{prodId}
+	</select>
+
+</mapper>

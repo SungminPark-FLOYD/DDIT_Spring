@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h4>Principal : ${pageContext.request.userPrincipal }</h4>
 <c:choose>
 	<c:when test="${not empty sessionScope.authMember}">
 		<h1>환영합니다 <a href="<c:url value='/mypage' />">${authMember.memName }</a> 님.</h1>
