@@ -2,6 +2,9 @@ package kr.or.ddit.member.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.exception.PkNotFoundException;
 import kr.or.ddit.login.AuthenticateException;
@@ -17,11 +20,19 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao = new MemberDAOImpl();
 	private AuthenticateService authService = new AuthenticateServiceImpl();
 	
+	private void encryptMember(MemberVO member) { //call by reference 방식
+		String plain = member.getMemPass();
+		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String encoded = encoder.encode(plain);
+		member.setMemPass(encoded);
+	}
+	
 	@Override
 	public ServiceResult createMember(MemberVO member) {
 		ServiceResult result = null;
 		if(dao.selectMember(member.getMemId()) != null) return result = ServiceResult.PKDUPLICATED;
 		
+		encryptMember(member);
 		int cnt = dao.insertMember(member);
 		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
 		

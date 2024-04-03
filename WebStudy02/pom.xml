@@ -8,6 +8,7 @@
   	<java-version>1.8</java-version>
   	<com.fasterxml.jackson-version>2.16.1</com.fasterxml.jackson-version>
   	<org.apache.logging.log4j-version>2.23.1</org.apache.logging.log4j-version>
+  	<org.springframework.security-version>5.8.11</org.springframework.security-version>
   </properties>
   <build>
     <plugins>
@@ -26,6 +27,12 @@
     </plugins>
   </build>
    <dependencies>
+<!--    암호화 지원용 -->
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-crypto</artifactId>
+	    <version>${org.springframework.security-version}</version>
+	</dependency>
   	<dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>javax.servlet-api</artifactId>

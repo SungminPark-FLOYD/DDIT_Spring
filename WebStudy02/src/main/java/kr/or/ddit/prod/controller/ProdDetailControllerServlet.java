@@ -13,7 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import kr.or.ddit.prod.service.ProdService;
 import kr.or.ddit.prod.service.ProdServiceImpl;
 import kr.or.ddit.vo.ProdVO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @WebServlet("/prod/prodDetail.do")
 public class ProdDetailControllerServlet extends HttpServlet{
 	private ProdService service = new ProdServiceImpl();
@@ -28,6 +30,7 @@ public class ProdDetailControllerServlet extends HttpServlet{
 		
 		ProdVO prod = service.retrieveProd(prodId);
 		req.setAttribute("prod", prod);
+		
 		
 		String viewName = "/WEB-INF/views/prod/prodDetail.jsp";
 		

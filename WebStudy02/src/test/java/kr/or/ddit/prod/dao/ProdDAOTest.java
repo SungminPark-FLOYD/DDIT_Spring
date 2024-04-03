@@ -2,6 +2,7 @@ package kr.or.ddit.prod.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,32 @@ class ProdDAOTest {
 		ProdVO prod = new ProdVO();
 		prod = dao.selectProd("P101000001");
 		log.info("prod ={}", prod);
+	}
+	
+	@Test
+	@DisplayName("제품 등록")
+	void insertProdTest() {
+		ProdVO prod = new ProdVO();
+		prod.setProdName("맥북프로 3");
+		prod.setProdLgu("P103");
+		prod.setProdBuyer("P20102");
+		prod.setProdCost((long) 123213);
+		prod.setProdPrice((long) 123123);
+		prod.setProdSale((long) 123123);
+		prod.setProdOutline("선명한 화질 1");
+		prod.setProdImg("P201000009.gif");
+		prod.setProdTotalstock((long) 12312);
+		prod.setProdInsdate(LocalDate.now());
+		prod.setProdProperstock((long) 213123);
+		prod.setProdSize("14인치");
+		prod.setProdColor("은색");
+		prod.setProdDelivery("파손 주의");
+		prod.setProdUnit("EA");
+		
+		int a = dao.insertProd(prod);
+		
+		System.out.println(prod);
+				
 	}
 
 }

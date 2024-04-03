@@ -1,6 +1,7 @@
 package kr.or.ddit.vo;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -42,7 +43,8 @@ public class MemberVO implements Serializable{
 	private Long memMileage;
 	private boolean memDelete;
 	
-	
+	//구매기록 중복허용 불가
+	private Set<CartVO> cart; //has many
 	
 	
 	

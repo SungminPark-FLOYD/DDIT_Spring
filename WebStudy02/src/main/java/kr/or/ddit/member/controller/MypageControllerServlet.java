@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @WebServlet("/mypage")
 public class MypageControllerServlet extends HttpServlet{
 	private MemberService service = new MemberServiceImpl();
@@ -30,6 +32,9 @@ public class MypageControllerServlet extends HttpServlet{
 			viewName = "redirect:/login/loginForm.jsp";
 		}else {
 			MemberVO member = service.retrieveMember(authMember.getMemId());
+			
+			member.getCart().forEach(b -> log.info("prodName = {}", b.getProd()));
+			
 			req.setAttribute("member", member);
 			viewName = "/WEB-INF/views/member/mypage.jsp";
 		}

@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.prod.dao.ProdDAO">
 	<resultMap type="ProdVO" id="prodMap" autoMapping="true">
+		<id property="prodId" column="PROD_ID"/>
 		<association property="buyer" javaType="BuyerVO" autoMapping="true"/>
 		<association property="lprod" javaType="LprodVO" autoMapping="true"/>
+		<collection property="cartList" ofType="CartVO" autoMapping="true">
+			<association property="member" javaType="MemberVO" autoMapping="true"/>
+		</collection>
 <!-- 			<result property="buyerName" column="BUYER_NAME"/> -->
 <!-- 		</association> -->
 	</resultMap>
@@ -24,6 +28,10 @@
 	            INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
 	</select>
 	<select id="selectProd" resultMap="prodMap" parameterType="string">
+		WITH MEMBER_VIEW AS (
+		    SELECT DISTINCT CART_PROD, MEM_ID, MEM_NAME, MEM_MAIL
+		    FROM MEMBER INNER JOIN CART ON (CART_MEMBER = MEM_ID)
+		)               
 		SELECT
 			PROD_ID
 			,PROD_NAME
@@ -61,11 +69,62 @@
 			,BUYER_FAX
 			,BUYER_MAIL
 			,BUYER_CHARGER
-			,BUYER_TELEXT			
+			,BUYER_TELEXT	
+            ,MEM_ID, MEM_NAME, MEM_MAIL
 		FROM
 		    PROD INNER JOIN BUYER ON(PROD_BUYER = BUYER_ID)
 	            INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
+                LEFT OUTER JOIN MEMBER_VIEW ON (CART_PROD = PROD_ID)  
 	    WHERE PROD_ID = #{prodId}
 	</select>
-
+	<insert id="insertProd" parameterType="ProdVO">
+<!-- 		setter 결정하기 -->
+		<selectKey order="BEFORE" resultType="string" keyProperty="prodId">
+			select #{prodLgu} || lpad(nvl(to_number(substr(max(prod_id), 5)),0) + 1, 6, '0')
+	        from prod
+	        where prod_lgu = #{prodLgu}
+		</selectKey>
+		INSERT INTO PROD ( PROD_ID
+						 , PROD_NAME
+						 , PROD_LGU
+						 , PROD_BUYER
+						 , PROD_COST
+						 , PROD_PRICE
+						 , PROD_SALE
+						 , PROD_OUTLINE
+						 , PROD_DETAIL
+						 , PROD_IMG
+						 , PROD_TOTALSTOCK
+						 , PROD_INSDATE
+						 , PROD_PROPERSTOCK
+						 , PROD_SIZE
+						 , PROD_COLOR
+						 , PROD_DELIVERY
+						 , PROD_UNIT
+						 , PROD_QTYIN
+						 , PROD_QTYSALE
+						 , PROD_MILEAGE )
+		VALUES (
+				#{prodId, jdbcType=VARCHAR}
+				, #{prodName, jdbcType=VARCHAR}
+				, #{prodLgu, jdbcType=CHAR}
+				, #{prodBuyer, jdbcType=CHAR}
+				, #{prodCost, jdbcType=NUMERIC}
+				, #{prodPrice, jdbcType=NUMERIC}
+				, #{prodSale, jdbcType=NUMERIC}
+				, #{prodOutline, jdbcType=VARCHAR}
+				, #{prodDetail, jdbcType=CLOB}
+				, #{prodImg, jdbcType=VARCHAR}
+				, #{prodTotalstock, jdbcType=NUMERIC}
+				, #{prodInsdate, jdbcType=DATE}
+				, #{prodProperstock, jdbcType=NUMERIC}
+				, #{prodSize, jdbcType=VARCHAR}
+				, #{prodColor, jdbcType=VARCHAR}
+				, #{prodDelivery, jdbcType=VARCHAR}
+				, #{prodUnit, jdbcType=VARCHAR}
+				, #{prodQtyin, jdbcType=NUMERIC}
+				, #{prodQtysale, jdbcType=NUMERIC}
+				, #{prodMileage, jdbcType=NUMERIC}
+			)
+	</insert>
 </mapper>
