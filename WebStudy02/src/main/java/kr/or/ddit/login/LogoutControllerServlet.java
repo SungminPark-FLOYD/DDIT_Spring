@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
+
 @WebServlet("/login/logout.do")
 public class LogoutControllerServlet extends HttpServlet{
 	@Override
@@ -35,11 +37,6 @@ public class LogoutControllerServlet extends HttpServlet{
 //		 * 6. view로 이동(flow control)
 		
 		//모든 컨트롤러에 다 적용시킬 수 있다
-		if(viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath());
-			resp.sendRedirect(location);
-		}else {
-			req.getRequestDispatcher(viewName).forward(req, resp); 
-		}
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 }

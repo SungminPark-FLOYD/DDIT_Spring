@@ -5,6 +5,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import kr.or.ddit.validate.groups.InsertGroup;
+import kr.or.ddit.validate.groups.UpdateGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,19 +21,30 @@ import lombok.ToString.Exclude;
 @EqualsAndHashCode(of = "prodId")
 //@ToString(exclude = "prodDetail")
 public class ProdVO implements Serializable{
+	@NotBlank(groups = UpdateGroup.class)
 	private String prodId;
+	@NotBlank
 	private String prodName;
+	@NotBlank(groups = InsertGroup.class)
 	private String prodLgu;
+	@NotBlank(groups = InsertGroup.class)
 	private String prodBuyer;
-	private Long prodCost;
-	private Long prodPrice;
-	private Long prodSale;
+	@Min(0)
+	private long prodCost;
+	@Min(0)
+	private long prodPrice;
+	@Min(0)
+	private long prodSale;
+	@NotBlank
 	private String prodOutline;
 	@Exclude
 	private String prodDetail;
+	@NotBlank
 	private String prodImg;
-	private Long prodTotalstock;
+	@Min(0)
+	private long prodTotalstock;
 	private LocalDate prodInsdate;
+	@NotNull
 	private Long prodProperstock;
 	private String prodSize;
 	private String prodColor;

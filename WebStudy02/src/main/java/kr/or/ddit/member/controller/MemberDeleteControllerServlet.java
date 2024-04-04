@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 
 @WebServlet("/member/memberDelete.do")
@@ -72,15 +73,6 @@ public class MemberDeleteControllerServlet extends HttpServlet{
 //		 * 6. view로 이동(flow control)
 		
 		//모든 컨트롤러에 다 적용시킬 수 있다
-		if(viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath());
-			resp.sendRedirect(location);
-		}else if(viewName.startsWith("forwrd:")) {
-			String path = viewName.substring("forwrd:".length());
-			req.getRequestDispatcher(path).forward(req, resp);
-		}
-		else {
-			req.getRequestDispatcher(viewName).forward(req, resp); 
-		}
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 }

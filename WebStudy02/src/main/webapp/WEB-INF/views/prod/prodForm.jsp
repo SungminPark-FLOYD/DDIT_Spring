@@ -14,47 +14,54 @@
 	<table class="table table-bordered">
 			<tr>
 				<th>상품명</th>
-				<td><input type="text" name="prodName" required
+				<td><input type="text" name="prodName" 
 					value="${prod.prodName}" class="form-control" /><span
 					class="text-danger">${errors.prodName}</span></td>
 			</tr>
 			<tr>
 				<th>상품분류</th>
 				<td>
-				<select name="prodLgu">
-					<option value="P101">전자제품</option>
+				<select name="prodLgu" data-init-value="${prod.prodLgu }">
+					<option value>제품 선택</option>
+					<c:forEach items="${lprodList }" var="lprod" >
+						<option value="${lprod.lprodGu }" >${lprod.lprodNm }</option>
+					</c:forEach>
+					
 				</select>
 				<span class="text-danger">${errors.prodLgu}</span></td>
 			</tr>
 			<tr>
 				<th>거래처</th>
 				<td>
-				<select name="prodBuyer">
-					<option value="P10101">삼성전자</option>
+				<select name="prodBuyer" data-init-value="${prod.prodBuyer }">
+					<option value>제조사 선택</option>
+					<c:forEach items="${buyerList }" var="buyer" >
+						<option value="${buyer.buyerId }" class="${buyer.buyerLgu }">${buyer.buyerName }</option>
+					</c:forEach>
 				</select>
 				<span class="text-danger">${errors.prodBuyer}</span></td>
 			</tr>
 			<tr>
 				<th>구매가</th>
-				<td><input type="number" name="prodCost" required
+				<td><input type="number" name="prodCost" 
 					value="${prod.prodCost}" class="form-control" /><span
 					class="text-danger">${errors.prodCost}</span></td>
 			</tr>
 			<tr>
 				<th>판매가</th>
-				<td><input type="number" name="prodPrice" required
+				<td><input type="number" name="prodPrice" 
 					value="${prod.prodPrice}" class="form-control" /><span
 					class="text-danger">${errors.prodPrice}</span></td>
 			</tr>
 			<tr>
 				<th>세일가</th>
-				<td><input type="number" name="prodSale" required
+				<td><input type="number" name="prodSale" 
 					value="${prod.prodSale}" class="form-control" /><span
 					class="text-danger">${errors.prodSale}</span></td>
 			</tr>
 			<tr>
 				<th>요약정보</th>
-				<td><input type="text" name="prodOutline" required
+				<td><input type="text" name="prodOutline" 
 					value="${prod.prodOutline}" class="form-control" /><span
 					class="text-danger">${errors.prodOutline}</span></td>
 			</tr>
@@ -66,13 +73,13 @@
 			</tr>
 			<tr>
 				<th>이미지</th>
-				<td><input type="text" name="prodImg" required
+				<td><input type="text" name="prodImg" 
 					value="${prod.prodImg}" class="form-control" /><span
 					class="text-danger">${errors.prodImg}</span></td>
 			</tr>
 			<tr>
 				<th>총재고</th>
-				<td><input type="number" name="prodTotalstock" required
+				<td><input type="number" name="prodTotalstock" 
 					value="${prod.prodTotalstock}" class="form-control" /><span
 					class="text-danger">${errors.prodTotalstock}</span></td>
 			</tr>
@@ -84,7 +91,7 @@
 			</tr>
 			<tr>
 				<th>적정재고</th>
-				<td><input type="number" name="prodProperstock" required
+				<td><input type="number" name="prodProperstock" 
 					value="${prod.prodProperstock}" class="form-control" /><span
 					class="text-danger">${errors.prodProperstock}</span></td>
 			</tr>
@@ -138,5 +145,6 @@
 		</table>
 </form>
 <jsp:include page="/WEB-INF/includee/postScript.jsp"/>
+<script src="${pageContext.request.contextPath }/resources/js/app/prod/prodForm.js"></script>
 </body>
 </html>

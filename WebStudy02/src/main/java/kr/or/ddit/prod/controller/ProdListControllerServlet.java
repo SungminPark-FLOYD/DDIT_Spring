@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.prod.service.ProdService;
 import kr.or.ddit.prod.service.ProdServiceImpl;
 import kr.or.ddit.vo.ProdVO;
@@ -21,18 +22,9 @@ public class ProdListControllerServlet extends HttpServlet{
 		List<ProdVO> prodList = service.retrieveProdList();
 		req.setAttribute("prodList", prodList);
 		
-		String viewName = "/WEB-INF/views/prod/prodList.jsp";
+		String viewName = "prod/prodList";
 		
-		if(viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath());
-			resp.sendRedirect(location);
-		}else if(viewName.startsWith("forwrd:")) {
-			String path = viewName.substring("forwrd:".length());
-			req.getRequestDispatcher(path).forward(req, resp);
-		}
-		else {
-			req.getRequestDispatcher(viewName).forward(req, resp); 
-		}
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 
 }

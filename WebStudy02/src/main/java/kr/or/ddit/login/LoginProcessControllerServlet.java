@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.exception.ResponseStatusException;
 import kr.or.ddit.login.service.AuthenticateService;
 import kr.or.ddit.login.service.AuthenticateServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 
 @WebServlet("/login/loginProcess.do")
@@ -63,12 +64,7 @@ public class LoginProcessControllerServlet extends HttpServlet{
 //			 * 6. view로 이동(flow control)
 			
 			//모든 컨트롤러에 다 적용시킬 수 있다
-			if(viewName.startsWith("redirect:")) {
-				String location = viewName.replace("redirect:", req.getContextPath());
-				resp.sendRedirect(location);
-			}else {
-				req.getRequestDispatcher(viewName).forward(req, resp); 
-			}
+			new ViewResolverComposite().resolveView(viewName, req, resp);
 			
 			
 		}catch(ResponseStatusException e) {
