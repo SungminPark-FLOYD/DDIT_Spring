@@ -1,18 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
-</head>
-<body>
+
 <table class="table table-bordered table-striped" >
 		<tr>
 			<th>상품코드</th>
-			<td>${prod.prodId}</td>
+			<td id="prodId">${prod.prodId}</td>
 		</tr>
 		<tr>
 			<th>제조사정보</th>
@@ -106,6 +99,7 @@
 			<th>총재고</th>
 			<td>${prod.prodTotalstock}</td>
 		</tr>
+		
 		<tr>
 			<th>입고일</th>
 			<td>${prod.prodInsdate}</td>
@@ -142,7 +136,10 @@
 			<th>마일리지</th>
 			<td>${prod.prodMileage}</td>
 		</tr>
+		<tr>
+			<td colspan="2">
+				<button type="button" class="btn btn-secondary" id="updateBtn">수정</button>
+			</td>
+		</tr>
 </table>
-<jsp:include page="/WEB-INF/includee/postScript.jsp"/>
-</body>
-</html>
+<script src="${pageContext.request.contextPath }/resources/js/app/prod/prodDetail.js"></script>

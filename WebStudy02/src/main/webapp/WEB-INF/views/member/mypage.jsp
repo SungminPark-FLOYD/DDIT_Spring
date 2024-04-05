@@ -1,20 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<c:if test="${not empty message }">
-	<script>
-		alert("${message}")
-	</script>
-	<c:remove var="message" scope="session"/>
-</c:if>
-<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
-</head>
-<body>
+
+
 <h4>${member.memName }의 마이페이지</h4>
 <table class="table table-bordered">
 			<tr>
@@ -171,6 +159,3 @@
 		location.href = `${pageContext.request.contextPath}/member/memberUpdate.do`;
 	})
 </script>
-<jsp:include page="/WEB-INF/includee/postScript.jsp"/>
-</body>
-</html>

@@ -29,6 +29,7 @@
 				, MEM_MAIL, MEM_JOB, MEM_LIKE                 										
 				, MEM_MEMORIAL, TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY, MEM_MILEAGE
 				, MEM_DELETE
+				, MEM_ROLE 
 				, CART_PROD
 				, CART_NO
                 , PROD_NAME
@@ -110,7 +111,8 @@
 				, MEM_NAME                     									
 				,MEM_HP
 				, MEM_MAIL  
-				, MEM_DELETE                                 											                                               									
+				, MEM_DELETE  
+				, MEM_ROLE                               											                                               									
 				FROM MEMBER                                    									
 				WHERE MEM_ID = #{memId}  
 				AND MEM_DELETE IS NULL                      											

@@ -31,21 +31,15 @@ public class MemberUpdateControllerServlet extends HttpServlet{
 	private MemberService service = new MemberServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if(session.isNew()) {
-			resp.sendError(400);
-			return;
-		}
-		MemberVO authMember =(MemberVO) session.getAttribute("authMember");
-		
 		String viewName = null;
-		if(authMember == null) {
-			viewName = "redirect:/login/loginForm.jsp";
-		}else {
-			MemberVO member = service.retrieveMember(authMember.getMemId());
-			req.setAttribute("member", member);
-			viewName = "member/memberForm";
-		}
+
+		String memId = req.getUserPrincipal().getName();
+		HttpSession session = req.getSession();
+			
+		MemberVO member = service.retrieveMember(memId);
+		req.setAttribute("member", member);
+		viewName = "member/memberForm";
+		
 		
 		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}

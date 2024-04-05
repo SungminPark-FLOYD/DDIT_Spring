@@ -1,20 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
-<c:if test="${not empty message}">
-	<script type="text/javascript">
-		alert("${message}");
-	</script>
-	<c:remove var="message" scope="session"/>
-</c:if>
-</head>
-<body>
 
 <form action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post" enctype="application/x-www-form-urlencoded">
 	<table class="table table-bordered">
@@ -135,7 +121,5 @@
 			</tr>
 		</table>
 </form>
-<jsp:include page="/WEB-INF/includee/postScript.jsp"/>
+
 <script src='<c:url value="/resources/js/member/memberForm.js"/>'></script>
-</body>
-</html>

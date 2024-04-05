@@ -51,6 +51,7 @@ public class LoginProcessControllerServlet extends HttpServlet{
 				
 //				인증된 사용자 임을 증명하는 상태정보 생성 및 유지
 				session.setAttribute("authMember", authMember);
+				
 //				성공 -> 웰컴페이지로 이동 - redirect
 				viewName = "redirect:/";
 				

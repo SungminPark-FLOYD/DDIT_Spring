@@ -14,24 +14,15 @@
 			<tr>
 				<th>상품분류</th>
 				<td>
-				<select name="prodLgu" data-init-value="${prod.prodLgu }">
-					<option value>제품 선택</option>
-					<c:forEach items="${lprodList }" var="lprod" >
-						<option value="${lprod.lprodGu }" >${lprod.lprodNm }</option>
-					</c:forEach>
-					
-				</select>
+				<input type="hidden" name="prodLgu" value="${prod.prodLgu }">
+				${prod.lprod.lprodNm }
 				<span class="text-danger">${errors.prodLgu}</span></td>
 			</tr>
 			<tr>
 				<th>거래처</th>
 				<td>
-				<select name="prodBuyer" data-init-value="${prod.prodBuyer }">
-					<option value>제조사 선택</option>
-					<c:forEach items="${buyerList }" var="buyer" >
-						<option value="${buyer.buyerId }" class="${buyer.buyerLgu }">${buyer.buyerName }</option>
-					</c:forEach>
-				</select>
+				<input type="hidden" name="prodBuyer" value="${prod.prodBuyer }">
+				${prod.buyer.buyerName }
 				<span class="text-danger">${errors.prodBuyer}</span></td>
 			</tr>
 			<tr>

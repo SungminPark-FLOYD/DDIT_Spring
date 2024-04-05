@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
+
 <style type="text/css">
 	tr[data-mem-id]{
 		cursor: pointer;
@@ -15,9 +10,6 @@
 		color: green;
 	}
 </style>
-</head>
-<body data-url="${pageContext.request.contextPath }">
-
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -140,7 +132,4 @@
 
 
 
-<jsp:include page="/WEB-INF/includee/postScript.jsp"/>
 <script src='<c:url value="/resources/js/member/memberList.js"/>'></script>
-</body>
-</html>

@@ -23,7 +23,6 @@ public class ProdListControllerServlet extends HttpServlet{
 		req.setAttribute("prodList", prodList);
 		
 		String viewName = "prod/prodList";
-		
 		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 

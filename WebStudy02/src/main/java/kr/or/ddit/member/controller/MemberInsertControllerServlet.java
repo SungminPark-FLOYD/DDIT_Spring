@@ -51,7 +51,6 @@ public class MemberInsertControllerServlet extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
 		MemberVO member = new MemberVO(); //command Object 
 		req.setAttribute("member", member);
 		Map<String, String[]> paramMap = req.getParameterMap();
