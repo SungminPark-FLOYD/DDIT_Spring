@@ -2,22 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- DAO 인터페이스의 quelifiedName을 따라가야함 -->
 <mapper namespace="kr.or.ddit.member.dao.MemberDAO">
+	<resultMap type="MemberVO" id="memberMap" autoMapping="true">
+			<id property="memId" column="MEM_ID"/>
+			<collection property="cart" ofType="CartVO" autoMapping="true">
+				<association property="prod" javaType="ProdVO" autoMapping="true"/>
+			</collection>
+	<!-- 			<result property="LprodId" column="LPROD_ID"/> -->
+	<!-- 		</association> -->
+		</resultMap>
 	<select id="selectMemberList" resultType="MemberVO">
 		SELECT MEM_ID MEMID,  MEM_NAME, MEM_ADD1, MEM_ADD2,  MEM_HP , MEM_MAIL, MEM_MILEAGE   		
         FROM MEMBER          
 	</select>
 	
-	<select id="selectMember" resultType="MemberVO" parameterType="string">
-		SELECT                                        										
+	<select id="selectMember" resultMap="memberMap" parameterType="string">
+				WITH CART_VIEW AS (
+				    SELECT CART_MEMBER, CART_PROD, CART_NO, TO_DATE(SUBSTR(CART_NO, 1, 8), 'YYYYMMDD') CART_DATE,
+				    PROD_NAME, CART_QTY
+				    FROM CART INNER JOIN PROD ON (CART_PROD = PROD_ID)
+				)
+				SELECT                                        										
 				MEM_ID, MEM_PASS, MEM_NAME                     									
 				, MEM_REGNO1, MEM_REGNO2, TO_CHAR(MEM_BIR, 'YYYY-MM-DD') MEM_BIR           		
 				, MEM_ZIP, MEM_ADD1, MEM_ADD2                 										
 				, MEM_HOMETEL, MEM_COMTEL, MEM_HP              									
 				, MEM_MAIL, MEM_JOB, MEM_LIKE                 										
 				, MEM_MEMORIAL, TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY, MEM_MILEAGE
-				, MEM_DELETE                                   											                                               									
-				FROM MEMBER                                    									
-				WHERE MEM_ID = #{memId}                         											
+				, MEM_DELETE
+				, MEM_ROLE 
+				, CART_PROD
+				, CART_NO
+                , PROD_NAME
+                , CART_QTY
+                , CART_DATE
+				FROM MEMBER LEFT OUTER JOIN CART_VIEW ON (CART_MEMBER = MEM_ID)                                   									
+				WHERE MEM_ID = #{memId}                     											
 	</select>
 	<insert id="insertMember" parameterType="MemberVO">
 		INSERT INTO member (                             
@@ -63,11 +82,7 @@
 	<update id="update" parameterType="MemberVO">
 		UPDATE MEMBER
 		SET	
-			MEM_PASS = #{memPass, jdbcType=VARCHAR}
-			, MEM_NAME = #{memName, jdbcType=VARCHAR}
-			, MEM_REGNO1 = #{memRegno1, jdbcType=CHAR}
-			, MEM_REGNO2 = #{memRegno2, jdbcType=CHAR}
-			, MEM_BIR = #{memBir, jdbcType=DATE}
+			MEM_NAME = #{memName, jdbcType=VARCHAR}
 			, MEM_ZIP = #{memZip, jdbcType=CHAR}
 			, MEM_ADD1 = #{memAdd1, jdbcType=VARCHAR}
 			, MEM_ADD2 = #{memAdd2, jdbcType=VARCHAR}
@@ -79,7 +94,6 @@
 			, MEM_LIKE = #{memLike, jdbcType=VARCHAR}
 			, MEM_MEMORIAL = #{memMemorial, jdbcType=VARCHAR}
 			, MEM_MEMORIALDAY = #{memMemorialday, jdbcType=DATE}
-			, MEM_MILEAGE = #{memMileage, jdbcType=NUMERIC}
 		WHERE
 			MEM_ID = #{memId, jdbcType=VARCHAR}
 	</update>
@@ -90,4 +104,17 @@
 		WHERE
 			MEM_ID = #{memId, jdbcType=VARCHAR}
 	</update>
+	<select id="selectMemberForAuth" resultType="MemberVO">
+		SELECT                                        										
+				MEM_ID
+				, MEM_PASS
+				, MEM_NAME                     									
+				,MEM_HP
+				, MEM_MAIL  
+				, MEM_DELETE  
+				, MEM_ROLE                               											                                               									
+				FROM MEMBER                                    									
+				WHERE MEM_ID = #{memId}  
+				AND MEM_DELETE IS NULL                      											
+	</select>
 </mapper>

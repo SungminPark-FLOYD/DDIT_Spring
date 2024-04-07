@@ -6,7 +6,7 @@
 //	
 //})
 
-const cPath = document.body.dataset.url;
+const cPath = document.body.dataset.contextPath;
 
 //간소화 시킨 코드
 $(function() {
@@ -14,11 +14,9 @@ $(function() {
 		let tr = event.relatedTarget;
 		let memId = $(tr).data("memId") 
 		let url = `${cPath}/member/memberDetail.do`;
+//		let url = `/member/memberDetail.do`;
 		let method = "get";
 		
-		$('button.btn.btn-primary').on('click', function() {				
-			location.href = `${cPath}/member/memberUpdate.do?who=${memId}`;
-		})
 		$.ajax({
 			url :url ,
 			method :method, 
@@ -31,7 +29,7 @@ $(function() {
 				$modal.find("td[id]").each(function(index, td) {
 					let propName = td.id;
 					td.innerHTML = member[propName];
-				})
+				});
 			},
 			error:function(jqXHR, status, errorText) {
 				console.log(jqXHR,status, errorText);
@@ -58,11 +56,7 @@ $(function() {
 //		
 //	})
 
-	$('button.btn.btn-primary').on('click', function() {
-		let memId = $('#memId').val();
-		console.log(memId)
-		location.href = `${cPath}/member/memberUpdate.do?who=${memId}`;
-	})
+	
 });
 
 //document.addEventListener('DOMContentLoaded', function() {

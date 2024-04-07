@@ -17,9 +17,10 @@ import org.apache.commons.lang3.StringUtils;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 
-@WebServlet("/member/memberDelete.do")
+//@WebServlet("/member/memberDelete.do")
 public class MemberDeleteController extends HttpServlet{
 	private MemberService service = new MemberServiceImpl();
 	@Override
@@ -49,11 +50,11 @@ public class MemberDeleteController extends HttpServlet{
 			switch (result) {
 			case INVALIDPASSWORD:
 				req.setAttribute("message", "비밀번호인증실패");
-				viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
+				viewName = "member/memberUpdateForm";
 				break;
 			case FAIL:
 				req.setAttribute("message", "서버 오류");
-				viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
+				viewName = "member/memberUpdateForm";
 				break;
 			case OK:
 				req.getSession().setAttribute("lastCreated", member);
@@ -63,18 +64,13 @@ public class MemberDeleteController extends HttpServlet{
 			// 4. scope를 이용해 model 공유
 			
 		}else {
-			viewName = "/WEB-INF/views/member/memberUpdateForm.jsp";
+			viewName = "member/memberUpdateForm";
 		}
 //		 * 5. view 결정
 //		 * 6. view로 이동(flow control)
 		
 		//모든 컨트롤러에 다 적용시킬 수 있다
-		if(viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath());
-			resp.sendRedirect(location);
-		}else {
-			req.getRequestDispatcher(viewName).forward(req, resp); 
-		}
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 	
 	private boolean validate(MemberVO member, Map<String, String> errors) {

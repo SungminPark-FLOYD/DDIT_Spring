@@ -10,7 +10,9 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import kr.or.ddit.member.dao.MemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 class MemberDAOImplTest {
 	private MemberDAO dao = new MemberDAOImpl();
 	@Test
@@ -34,7 +36,7 @@ class MemberDAOImplTest {
 		List<MemberVO> list = dao.selectMemberList();
 		assertNotNull(list);
 		assertNotEquals(0,list.size());
-		System.out.println(list.size());
+		log.info("list : {}", list);
 		
 	}
 

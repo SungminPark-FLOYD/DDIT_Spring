@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,15 +45,12 @@ public class MemberListControllerServlet extends HttpServlet{
 		log.info("조회된 모델 : {}", memberList);
 		req.setAttribute("memberList", memberList);
 		
-		String accept = req.getHeader("accept");
-		String viewName = null;
-		if(accept.contains("json")) {
-			viewName = "/jsonView";
-		}else{
-			viewName = "/WEB-INF/views/member/memberList.jsp";
-		}
+		
+		
+		String viewName = null;	
+		viewName = "member/memberList";
 		
 		resp.setCharacterEncoding("utf-8");
-		req.getRequestDispatcher(viewName).forward(req, resp);	
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 }

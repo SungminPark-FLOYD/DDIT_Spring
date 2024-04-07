@@ -2,6 +2,8 @@ package kr.or.ddit.member.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.ddit.vo.MemberVO;
 
 /**
@@ -41,4 +43,11 @@ public interface MemberDAO {
 	 * @return 삭제(??)된 레코드 수
 	 */
 	public int delete(String memId);
+	
+	/**
+	 * 인승시스템에서 사용할 메소드로 사용자의 (아이디, 비밀번호, 이름, 휴대폰, 이메일)을 조회함
+	 * @param memId
+	 * @return
+	 */
+	public MemberVO selectMemberForAuth(@Param("memId") String memId);
 }
