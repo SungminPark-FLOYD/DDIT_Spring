@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 	BTS멤버 전원을 조회하고, 해당 정보를 콘솔에 출력 -->
+	<bean id="btsDAO" class="kr.or.ddit.case4.bts.dao.InMemoryDAOImpl"/>
+	
+	<bean id="btsService" class="kr.or.ddit.case4.bts.service.BtsServiceImpl"
+		c:dao-ref="btsDAO"
+	/>
+	
+	<bean id="case4Playground" class="kr.or.ddit.case4.bts.Case4Playground"
+		p:service-ref="btsService"
+	/>
+</beans>
