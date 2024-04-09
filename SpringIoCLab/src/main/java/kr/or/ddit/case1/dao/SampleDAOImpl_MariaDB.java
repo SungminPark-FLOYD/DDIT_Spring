@@ -5,10 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import kr.or.ddit.vo.SampleVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Repository
 public class SampleDAOImpl_MariaDB implements SampleDAO {
 	
 	private Map<String, SampleVO> mariaDB;

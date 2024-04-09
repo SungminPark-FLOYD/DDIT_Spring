@@ -1,22 +1,23 @@
 package kr.or.ddit.case2;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import kr.or.ddit.case1.service.SampleService;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @ToString
+@RequiredArgsConstructor
+@Setter
+@Component
 public class Foo {
-	private Bar bar; //required
+	
+	private final Bar bar; //required
+	@Autowired
 	private Baz baz; //optional
 	
-	public Foo(Bar bar) {
-		super();
-		this.bar = bar;
-	}
-	
-	public void setBaz(Baz baz) {
-		this.baz = baz;
-	}
-	
-	
-	
+	private final SampleService service;
 	
 }

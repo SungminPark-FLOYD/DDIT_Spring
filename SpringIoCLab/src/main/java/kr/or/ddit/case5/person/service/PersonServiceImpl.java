@@ -2,6 +2,8 @@ package kr.or.ddit.case5.person.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import kr.or.ddit.case4.bts.dao.BtsDAO;
 import kr.or.ddit.case5.person.dao.PersonDAO;
 import kr.or.ddit.case5.person.dao.PersonDAOImpl;
@@ -10,6 +12,7 @@ import kr.or.ddit.vo.PersonVo;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Service
 public class PersonServiceImpl implements PersonService{
 	private final PersonDAO dao;
 	

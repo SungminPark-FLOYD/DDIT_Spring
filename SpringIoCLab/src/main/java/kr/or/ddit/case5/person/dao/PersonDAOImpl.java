@@ -9,23 +9,43 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import kr.or.ddit.vo.PersonVo;
+import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Repository;
+
+import kr.or.ddit.vo.PersonVo;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Repository
 public class PersonDAOImpl implements PersonDAO {
-	private Properties props;
+//	private final Resource cpRes;
 	
-	public PersonDAOImpl() {
-		super();
-		props = new Properties();
-		
-		try(
-			InputStream is = this.getClass().getResourceAsStream("/kr/or/ddit/MemberData.properties");
-		){
-			props.load(is);
-		} catch (IOException e) {
-			//checked EX를 unchecked EX로 전환한다.
-			throw new UncheckedIOException(e);
-		}
+	@javax.annotation.Resource(name = "props")
+	private final Properties props;
+	
+	@Value("file:D:/00.medias/googlelogo_color_272x92dp.png")
+	private Resource fsRes;
+	
+	public void setFsRes(Resource fsRes) {
+		this.fsRes = fsRes;
+	}
+	@PostConstruct
+	public void init() {
+//		try(
+//				InputStream is = cpRes.getInputStream();
+//			){
+//				props.load(is);
+//				log.info("주입된 리소스 : {}", cpRes);
+				log.info("주입된 리소스 : {}", fsRes);
+//		} catch (IOException e) {
+//			//checked EX를 unchecked EX로 전환한다.
+//			throw new UncheckedIOException(e);
+//		}
 	}
 	
 	private PersonVo rawToObject(String id, String rawData) {

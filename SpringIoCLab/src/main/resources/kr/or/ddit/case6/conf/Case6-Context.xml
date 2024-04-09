@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<!-- 빈에 등록하자마자 값을 넣어주고 싶을때 -->
+	<util:list id="list" list-class="java.util.LinkedList">
+		<value>element1</value>
+		<value>element2</value>
+	</util:list>
+	<!-- 기본으로 HashSet -->
+	<util:set id="set">
+		<ref bean="nowLDT"/>
+		<value>element2</value>
+	</util:set>
+	<!-- 기본으로 HashMap -->
+	<util:map id="map" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="key1" value="value1"/>
+		<entry key="key2" value-ref="nowLDT"/>
+		<entry key="key3">
+			<bean class="kr.or.ddit.vo.PersonVo"/>
+		</entry>
+	</util:map>
+	<util:properties id="props" location="classpath:/log4jdbc.log4j2.properties">
+		<prop key="key1">value1</prop>
+		<prop key="key2">value2</prop>
+	</util:properties>
+	
+<!-- 	FactoryBean : 생성자나 factory-method를 사용해 생성할 수 있는 객체를 빈으로 등록할때 활용함 -->
+<!-- 		FactoryBean을 빈으로 등록하면, 실제 컨테이너 내부에는 factory bean 에서 생성된 객체의 인스턴스가 관리됨 -->
+	<bean id="array" class="kr.or.ddit.case6.ObjectArrayFactoryBean"/>
+	
+	<bean id="nowLDT" class="java.time.LocalDateTime" factory-method="now" scope="prototype"/>
+	
+	
+	<bean id="outer2" class="kr.or.ddit.case6.CollectionDIOuter" 
+		p:list-ref="list"
+		p:set-ref="set"
+		p:map-ref="map"
+		p:props-ref="props"
+		p:array-ref="array"
+	/>
+	
+	
+	<bean id="outer1" class="kr.or.ddit.case6.CollectionDIOuter">
+		<property name="array">
+			<array>
+				<bean class="java.time.LocalDate" factory-method="now"/>
+				<value>element2</value>
+				<ref bean="nowLDT"/>
+			</array>
+		</property>
+		<property name="list">
+			<list>
+				<value>element1</value>
+				<value>element2</value>
+			</list>
+		</property>
+		<property name="set">
+			<set>
+				<ref bean="nowLDT"/>
+				<value>element2</value>
+			</set>
+		</property>
+		<property name="map">
+			<map>
+				<entry key="key1" value="value1"/>
+				<entry key="key2" value-ref="nowLDT"/>
+				<entry key="key3">
+					<bean class="kr.or.ddit.vo.PersonVo"/>
+				</entry>
+			</map>
+		</property>
+		<property name="props">
+			<props>
+				<prop key="key1">value1</prop>
+				<prop key="key2">value2</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

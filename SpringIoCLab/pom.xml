@@ -27,6 +27,12 @@
 	    	<artifactId>spring-context</artifactId>
 	    	<version>${org.springframework-version}</version>
 		</dependency>
+<!-- 		IO 유틸리티 -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.16.0</version>
+		</dependency>
 	<!-- javaBean 규약 지원용 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -66,6 +72,12 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.10.2</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-test</artifactId>
+	    	<version>${org.springframework-version}</version>
+	    	<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

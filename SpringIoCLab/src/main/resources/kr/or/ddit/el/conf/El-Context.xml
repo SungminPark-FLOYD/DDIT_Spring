@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<util:properties id="infoProp" location="classpath:/kr/or/ddit/db/DbInfo.properties"/>
+<!-- 	#{스프링의 el} -->
+<!-- 	SpringEL(spEL) : #{빈아이디.프로퍼티명}, #{빈아이디['프로퍼티명']} -->
+	<bean id="DBInfo" class="kr.or.ddit.el.DBInfo"
+		p:driverClassName="#{infoProp.driverClassName}"
+		p:url="#{infoProp.url}"
+		p:user="#{infoProp['user']}"
+		p:password="#{infoProp['password']}"
+		p:maxActive="#{infoProp.maxActive}"
+		p:maxIdle="#{infoProp.maxIdle}"
+		p:maxWait="#{infoProp['maxWait'] + 3}"
+		p:testQuery="#{infoProp['testQuery'] + 3}"
+	/>
+
+</beans>

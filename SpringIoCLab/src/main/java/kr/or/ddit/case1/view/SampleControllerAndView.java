@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import kr.or.ddit.case1.dao.SampleDAO;
 import kr.or.ddit.case1.dao.SampleDAOImpl_MariaDB;
@@ -14,13 +15,14 @@ import kr.or.ddit.vo.SampleVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Controller
 public class SampleControllerAndView {
 	public static void main(String[] args) {
 //		SampleDAO dao = new SampleDAOImpl_MariaDB();
 //		SampleService service = new SampleServiceImpl(dao);
 		
 		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("/kr/or/ddit/case1/conf/Sample-Context.xml");
+				new ClassPathXmlApplicationContext("/kr/or/ddit/case8/conf/AutoDI-Context.xml");
 		//xml에 설정해둔 id값 넘겨주기
 		SampleService service = context.getBean(SampleService.class);	
 		List<SampleVO> list = service.readSampleList();

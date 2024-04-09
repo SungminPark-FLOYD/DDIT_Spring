@@ -9,11 +9,13 @@
 	<bean id="baz" class="kr.or.ddit.case2.Baz"/>
 	
 	<bean id="foo1"  class="kr.or.ddit.case2.Foo">
-		<constructor-arg ref="bar"/>
+		<constructor-arg name="bar" ref="bar"/>
+		<constructor-arg name="service" ref="sampleService"/>
 		<property name="baz" ref="baz"/>
 	</bean>
 	
 	<bean id="foo2" class="kr.or.ddit.case2.Foo"
+		c:service-ref="sampleService"
 		c:bar-ref="bar"
 		p:baz-ref="baz"
 	/>
