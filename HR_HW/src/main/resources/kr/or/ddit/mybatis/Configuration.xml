@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<properties resource="kr/or/ddit/db/DbInfo.properties"/>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+<!-- 		<setting name="jdbcTypeForNull" value="VARCHAR"/> -->
+<!-- 		<setting name="jdbcTypeForNull" value="DATE"/> -->
+<!-- 		<setting name="jdbcTypeForNull" value="NUMERIC"/>	 -->
+	</settings>
+	<typeAliases>
+		<package name="kr.or.ddit.vo" />
+	</typeAliases>
+	<environments default="dev">
+		<environment id="dev">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driverClassName}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${user}" />
+				<property name="password" value="${password}" />
+				<!--풀링을 위한 풀링 정책 정하기-->
+				<property name="poolMaximumActiveConnections" value="${maxActive}" />
+				<property name="poolMaximumIdleConnections" value="${maxIdle}" />
+				<property name="poolTimeToWait" value="${maxWait}" />
+				<property name="poolPingQuery" value="${testQuery}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+	</mappers>
+</configuration>
