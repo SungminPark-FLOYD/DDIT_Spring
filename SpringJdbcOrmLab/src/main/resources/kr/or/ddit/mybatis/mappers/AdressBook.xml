@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.adressBook.dao.AdressBookDAO">
+
+	<select id="selectList" resultType="AdressBookVO">
+		SELECT 
+			ADRS_NO
+			, MEM_ID
+			, ADRS_NAME
+			, ADRS_TEL
+			, ADRS_ADD
+		FROM 
+			ADDRESSBOOK
+	
+	</select>
+	<select id="selectOne" resultType="AdressBookVO" parameterType="Long">
+		SELECT 
+			ADRS_NO
+			, MEM_ID
+			, ADRS_NAME
+			, ADRS_TEL
+			, ADRS_ADD
+		FROM 
+			ADDRESSBOOK
+		WHERE
+			ADRS_NO = #{adrsNo}
+	</select>
+	<insert id="insert" parameterType="AdressBookVO">
+		<selectKey order="BEFORE" keyProperty="adrsNo" resultType="Long">
+			SELECT NVL(MAX(ADRS_NO),0) + 1
+			FROM ADDRESSBOOK
+		</selectKey>
+		INSERT INTO ADDRESSBOOK(ADRS_NO
+								, MEM_ID
+								, ADRS_NAME
+								, ADRS_TEL
+								, ADRS_ADD)
+		VALUES(#{adrsNo}, #{memId}, #{adrsName}, #{adrsTel}, #{adrsAdd})
+	
+	</insert>
+	<update id="update" parameterType="AdressBookVO">
+		UPDATE SET ADDRESSBOOK
+			 MEM_ID = #{memId, jdbcType=VARCHAR}
+			, ADRS_NAME = #{adrsName, jdbcType=VARCHAR}
+			, ADRS_TEL = #{adrsTel, jdbcType=VARCHAR}
+			, ADRS_ADD = #{adrsAdd, jdbcType=VARCHAR}
+		WHERE ADRS_NO = #{adrsNo, jdbcType=NUMERIC}
+	</update>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM
+			ADDRESSBOOK
+		WHERE ADRS_NO = #{adrsNo}
+	</delete>
+</mapper>
