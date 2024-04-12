@@ -8,6 +8,9 @@
 		<welcome-file>index.do</welcome-file>
 	</welcome-file-list>
 	<listener>
+		<listener-class>kr.or.ddit.listener.CustomServletContextListener</listener-class>
+	</listener>
+	<listener>
 		<listener-class>org.apache.tiles.web.startup.simple.SimpleTilesListener</listener-class>
 	</listener>
 	<servlet>

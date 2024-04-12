@@ -1,4 +1,4 @@
-<%@page import="kr.or.ddit.db.ConnectionFactory"%>
+<%-- <%@page import="kr.or.ddit.db.ConnectionFactory"%> --%>
 <%@page import="kr.or.ddit.utils.NamingUtils"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.util.ArrayList"%>

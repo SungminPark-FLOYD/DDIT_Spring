@@ -2,6 +2,7 @@ package kr.or.ddit.case5.person.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import kr.or.ddit.case5.person.service.PersonService;

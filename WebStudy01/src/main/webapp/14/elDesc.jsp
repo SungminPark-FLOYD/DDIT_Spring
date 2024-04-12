@@ -34,11 +34,11 @@
 		pageContext.setAttribute("attr", "23");
 	%>
 	
-	산술연산자 : ${23+12 }, ${attr+12 }, ${attr * 12 }, ${attr / 12 }, \${attr++ }
-	논리연산자 : &&(and), ||(or), !(not)
-		 ${true and true} , ${dummy and true }, ${not true }, ${not dummy }
-	비교 연산자 : >(gt), <(lt), ==(eq), >=(ge) , <=(le), !=(ne)
-		${23 ne 35}, ${23 le 35}, ${23 ge 35 }
+<%-- 	산술연산자 : ${23+12 }, ${attr+12 }, ${attr * 12 }, ${attr / 12 }, \${attr++ } --%>
+<!-- 	논리연산자 : &&(and), ||(or), !(not) -->
+<%-- 		 ${true and true} , ${dummy and true }, ${not true }, ${not dummy } --%>
+<!-- 	비교 연산자 : >(gt), <(lt), ==(eq), >=(ge) , <=(le), !=(ne) -->
+<%-- 		${23 ne 35}, ${23 le 35}, ${23 ge 35 } --%>
 	삼항연산자 : 논리값? 참:거짓
 		${23 lt 35 ? '작다' : '크거나 같다' }
 	<%

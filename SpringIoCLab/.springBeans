@@ -7,9 +7,8 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/resources/kr/or/ddit/case8/conf/AutoDI-Context.xml</config>
-		<config>src/main/resources/kr/or/ddit/case8/conf/Bts-Context.xml</config>
-		<config>src/main/resources/kr/or/ddit/case8/conf/Person-Context.xml</config>
+		<config>java:kr.or.ddit.case10.conf.RootContext</config>
+		<config>src/main/resources/kr/or/ddit/case10/conf/child-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

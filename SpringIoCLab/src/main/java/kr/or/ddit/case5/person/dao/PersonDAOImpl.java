@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 
@@ -25,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PersonDAOImpl implements PersonDAO {
 //	private final Resource cpRes;
 	
-	@javax.annotation.Resource(name = "props")
-	private final Properties props;
+//	@javax.annotation.Resource(name = "props")
+	private final Properties propBak;
 	
 	@Value("file:D:/00.medias/googlelogo_color_272x92dp.png")
 	private Resource fsRes;
@@ -58,10 +59,10 @@ public class PersonDAOImpl implements PersonDAO {
 	public List<PersonVo> selectPersonList(){
 		List<PersonVo> people = new ArrayList<PersonVo>();
 		
-		Enumeration<Object> keys = props.keys();
+		Enumeration<Object> keys = propBak.keys();
 		while (keys.hasMoreElements()) {
 			Object key = (Object) keys.nextElement();
-			Object value = props.get(key);
+			Object value = propBak.get(key);
 			PersonVo person = rawToObject(key.toString(), value.toString());
 			people.add(person);			
 		}
@@ -70,7 +71,7 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 	@Override
 	public PersonVo selectPerson(String id) {
-		String property = props.getProperty(id);
+		String property = propBak.getProperty(id);
 		
 //		if(property != null) {
 //			PersonVo person = rawToObject(id, property);			

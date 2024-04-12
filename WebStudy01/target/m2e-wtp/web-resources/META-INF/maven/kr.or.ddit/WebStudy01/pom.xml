@@ -71,18 +71,23 @@
 	    <artifactId>commons-beanutils</artifactId>
 	    <version>1.9.4</version>
 	</dependency>
-<!-- 	Json 마샬링 지원용 -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	    <version>${com.fasterxml.jackson-version}</version>
-	</dependency>
-<!-- 	XML 마샬링 지원용-->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.dataformat</groupId>
-	    <artifactId>jackson-dataformat-xml</artifactId>
-	    <version>${com.fasterxml.jackson-version}</version>
-	</dependency>
+		<!-- Json 마샬링 지원용 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-jsr310</artifactId>
+		    <version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+		<!-- XML 마샬링 지원용 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
 <!-- 	Test 용 -->
 	<dependency>
 	    <groupId>org.junit.jupiter</groupId>
