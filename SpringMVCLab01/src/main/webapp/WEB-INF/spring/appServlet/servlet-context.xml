@@ -15,14 +15,28 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	
-	<context:component-scan base-package="kr.or.ddit" />
+	<context:component-scan base-package="kr.or.ddit" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	<beans:bean id="xmlView" class="org.springframework.web.servlet.view.xml.MappingJackson2XmlView" />
+	
+	
+	<tiles-configurer>
+		<definitions location="/WEB-INF/tiles/*.xml"/>
+	</tiles-configurer>
 	
 	<view-resolvers>
 		<content-negotiation>
 			<default-views>
-				<beans:bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+				<beans:ref bean="jsonView"/>
+				<beans:ref bean="xmlView"/>
 			</default-views>
 		</content-negotiation>
+		<bean-name />
+		<tiles />
 		<jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
 		
 	</view-resolvers>
