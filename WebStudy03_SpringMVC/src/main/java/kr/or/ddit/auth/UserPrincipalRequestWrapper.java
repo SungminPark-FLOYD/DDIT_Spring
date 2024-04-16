@@ -18,13 +18,15 @@ public class UserPrincipalRequestWrapper extends HttpServletRequestWrapper{
 	
 	@Override
 	public Principal getUserPrincipal() {
-		HttpSession session = getSession();
-		MemberVO authMember = (MemberVO) session.getAttribute("authMember");
-		if(authMember != null) {
-			return new MemberVOWrapper(authMember);
-		}else {
-			return super.getUserPrincipal();
+		HttpSession session = getSession(false);
+		if(session != null) {
+			MemberVO authMember = (MemberVO) session.getAttribute("authMember");
+			if(authMember != null) {
+				return new MemberVOWrapper(authMember);
+			}
 		}
+		return super.getUserPrincipal();
+		
 	}
 
 }

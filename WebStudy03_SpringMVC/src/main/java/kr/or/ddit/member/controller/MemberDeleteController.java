@@ -14,18 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 
 //@WebServlet("/member/memberDelete.do")
 @RequiredArgsConstructor
-@Controller
-public class MemberDeleteController extends HttpServlet{
+	public class MemberDeleteController extends HttpServlet{
 	private final MemberService service;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -74,7 +73,6 @@ public class MemberDeleteController extends HttpServlet{
 //		 * 6. view로 이동(flow control)
 		
 		//모든 컨트롤러에 다 적용시킬 수 있다
-		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 	
 	private boolean validate(MemberVO member, Map<String, String> errors) {

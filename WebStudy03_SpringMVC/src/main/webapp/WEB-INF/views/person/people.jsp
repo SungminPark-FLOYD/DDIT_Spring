@@ -26,9 +26,7 @@
 <body>
 <c:set value="${pageContext.request.contextPath }" var="cPath" scope="application"/>
 
-<form name="personForm" action="${cPath }/people.do" method="post">
-	<input type="text" name="who"/>
-</form>
+
 <table>
 	<thead>
 		<tr>
@@ -40,7 +38,7 @@
 		<c:forEach items="${people }" var="once">
 			<tr>
 				<td>${once['id'] }</td>
-				<td><a href="javascript:;" onclick="clickHandler(event)" data-member-id="${once['id']}">${once['name']}</a></td>
+				<td><a href="<c:url value='/people/${once.id }'/>">${once['name']}</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

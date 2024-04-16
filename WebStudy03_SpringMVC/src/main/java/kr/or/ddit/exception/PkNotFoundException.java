@@ -1,5 +1,7 @@
 package kr.or.ddit.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * 
@@ -9,7 +11,7 @@ package kr.or.ddit.exception;
 public class PkNotFoundException extends ResponseStatusException{
 
 	public PkNotFoundException(int status) {
-		super(status, "해당 데이터가 존재하지 않습니다.");
+		super(HttpStatus.valueOf(status), "해당 데이터가 존재하지 않습니다.");
 	}
 
 }

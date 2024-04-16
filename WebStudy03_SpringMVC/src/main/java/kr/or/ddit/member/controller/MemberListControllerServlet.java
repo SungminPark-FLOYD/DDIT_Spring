@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,27 +37,27 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 @Slf4j
-@WebServlet("/member/memberList.do")
+@RequestMapping("/member/memberList.do")
 public class MemberListControllerServlet extends HttpServlet{
 	//로거 설정파일에 있는 이름을 따라간다. -> 패키지에있는 구조를 따라서 클래스를 넘겨주면 알아서 찾아간다
 //	private static final Logger logger = LoggerFactory.getLogger(MemberListControllerServlet.class);
 	
+	@Autowired
 	private MemberService service;
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
+	@GetMapping
+	protected String doGet(Model model) {	
 		log.info("컨트롤러 동작");
-		req.setCharacterEncoding("utf-8");
+		
 		List<MemberVO> memberList = service.retrieveMemberList();
 		//메시지 arg
 		log.info("조회된 모델 : {}", memberList);
-		req.setAttribute("memberList", memberList);
-		
-		
+		model.addAttribute("memberList", memberList);
+			
 		
 		String viewName = null;	
 		viewName = "member/memberList";
 		
-		resp.setCharacterEncoding("utf-8");
-		new ViewResolverComposite().resolveView(viewName, req, resp);
+		
+		return viewName;
 	}
 }

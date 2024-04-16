@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,15 +33,16 @@ public class GeneratePrincipalFilter implements Filter{
 			throws IOException, ServletException {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
-		Object authMember = req.getSession().getAttribute("authMember");
-		if(authMember == null) {
-			chain.doFilter(request, response);
-		}else {
-			UserPrincipalRequestWrapper wrapper = new UserPrincipalRequestWrapper(req);
-			chain.doFilter(wrapper, response);
+		HttpSession session = req.getSession(false);
+		if(session != null) {
+			Object authMember = session.getAttribute("authMember");
+			if(authMember != null) {
+				UserPrincipalRequestWrapper wrapper = new UserPrincipalRequestWrapper(req);
+				chain.doFilter(wrapper, response);
+				return;
+			}
 		}
-		
-		
+		chain.doFilter(request, response);
 	}
 
 	@Override

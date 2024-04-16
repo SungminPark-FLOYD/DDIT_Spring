@@ -21,16 +21,22 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ViewResolverComposite;
-import kr.or.ddit.utils.PopulateUtils;
-import kr.or.ddit.utils.ValidateUtils;
 import kr.or.ddit.validate.groups.InsertGroup;
 import kr.or.ddit.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
+import oracle.jdbc.proxy.annotation.Post;
 
 
 /**
@@ -44,45 +50,39 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Controller
-@WebServlet("/member/memberInsert.do")
-public class MemberInsertControllerServlet extends HttpServlet{
+@RequestMapping("/member/memberInsert.do")
+public class MemberInsertControllerServlet {
 	
 	private final MemberService service;
 	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
-		String viewName = "member/memberForm";
-		new ViewResolverComposite().resolveView(viewName, req, resp);
+	@ModelAttribute("member")
+	public MemberVO member() {
+		return new MemberVO();
 	}
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		MemberVO member = new MemberVO(); //command Object 
-		req.setAttribute("member", member);
-		Map<String, String[]> paramMap = req.getParameterMap();
-		//사용되는 프로퍼티들을 bean에 넣어주는 작업 -> key와 vo의 프로퍼티 이름이 같으면 bean으로 넣어준다
+	
+	@GetMapping
+	public String doGet()  {	
+		return "member/memberForm";
+	
+	}
+	@PostMapping
+	public String doPost(@Validated(InsertGroup.class)@ModelAttribute MemberVO member, BindingResult errors, Model model
+			,RedirectAttributes redirectAttributes)  {
 		
-		//PopulateUtils로 바꿈
-		PopulateUtils.populate(member, paramMap);
-		
-		System.out.println(member);
-//		* 2. 검증
-		//call by reference 방식
-		Map<String, List<String>> errors = new LinkedHashMap<>();
-		req.setAttribute("errors", errors);
-		boolean valid = ValidateUtils.validate(member,errors, InsertGroup.class);
 //		 * 3. 로직 사용(model 확보)
 		String viewName = null;
 		//널인지 아닌지, 컬럼 길이제한이 넘는지 아닌지, date같은경우 날짜 포멧에 맞는지 아닌지
-		if(errors.isEmpty()) {
+		if(!errors.hasErrors()) {
 			
 			ServiceResult result = service.createMember(member);
 			switch (result) {
 			case PKDUPLICATED:
-				req.setAttribute("message", "아이디 중복");
-				viewName = "member/memberForm";
+				redirectAttributes.addFlashAttribute("member", member);
+				redirectAttributes.addFlashAttribute("message", "아이디 중복");
+				viewName = "redirect:/member/memberInsert.do";
 				break;
 			case FAIL:
-				req.setAttribute("message", "서버 오류");
+				model.addAttribute("message", "서버 오류");
 				viewName = "member/memberForm";
 				break;
 			case OK:
@@ -93,13 +93,15 @@ public class MemberInsertControllerServlet extends HttpServlet{
 			// 4. scope를 이용해 model 공유
 			
 		}else {
-			viewName = "member/memberForm";
+			redirectAttributes.addFlashAttribute("member", member);
+			redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "member", errors);
+			viewName = "redirect:/member/memberInsert.do";
 		}
 //		 * 5. view 결정
 //		 * 6. view로 이동(flow control)
 		
 		//모든 컨트롤러에 다 적용시킬 수 있다
-		new ViewResolverComposite().resolveView(viewName, req, resp);
+		return viewName;
 	}
 
 }
