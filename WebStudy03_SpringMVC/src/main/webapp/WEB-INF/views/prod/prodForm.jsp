@@ -6,7 +6,7 @@
 
 
 <form:form modelAttribute="${ProdInsertController.MODELNAME }"
-	method="post" enctype="application/x-www-form-urlencoded">
+	method="post" enctype="multipart/form-data">
 	<table class="table table-bordered">
 		<input type="hidden" name="prodId" value="${prod.prodId }">
 		<tr>
@@ -66,8 +66,8 @@
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td><form:input type="text" path="prodImg" required="true"
-					 class="form-control" />
+			<td>
+				<input type="file" name="prodImage"/>
 				<form:errors path="prodImg" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>

@@ -37,4 +37,13 @@
 	
 <!-- 	cache-period="0" => 정적자원 캐싱 막기 -->
 	<mvc:resources location="/resources/" mapping="/resources/**" cache-period="0"/>
+	
+	<!-- 	원본 request ==> wrapper request로 변경할때 사용되는 전략 -->
+	<!-- 	HttpServletRequest(Part s) ==> MultipartHttpServletRequest(MultipartFile) -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxInMemorySize="#{10*1024}"
+		p:maxUploadSize="#{1024*1024*100}"
+		p:maxUploadSizePerFile="#{1024*1024*50}"
+		p:uploadTempDir="file:D:/01.temp"
+	/>
 </beans>

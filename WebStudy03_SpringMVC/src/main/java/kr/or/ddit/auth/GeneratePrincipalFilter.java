@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import kr.or.ddit.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -23,6 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GeneratePrincipalFilter implements Filter{
 
+	@Autowired
+	private MemberService service;
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		log.info("{} 초기화 되었음.", this.getClass().getSimpleName());

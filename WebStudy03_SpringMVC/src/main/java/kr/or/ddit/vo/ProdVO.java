@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 import org.apache.ibatis.session.LocalCacheScope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.validate.groups.InsertGroup;
 import kr.or.ddit.validate.groups.UpdateGroup;
@@ -44,7 +46,13 @@ public class ProdVO implements Serializable{
 	@Exclude
 	private String prodDetail;
 	@NotBlank
-	private String prodImg;
+	private String prodImg;	//DB 데이터를 받기위한 프로퍼티
+	public void setProdImage(MultipartFile prodImage) {
+		if(prodImage.isEmpty()) return;
+		this.prodImage = prodImage;
+		this.prodImg = UUID.randomUUID().toString();
+	}
+	private MultipartFile prodImage;	//client의 part 데이터를 받기위한 프로퍼티
 	@Min(0)
 	private long prodTotalstock;
 	@DateTimeFormat(iso = ISO.DATE)

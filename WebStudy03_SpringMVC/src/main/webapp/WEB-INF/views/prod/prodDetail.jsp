@@ -93,11 +93,15 @@
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td>${prod.prodImg}</td>
+			<td>
+				<img src="<c:url value='/resources/prodImages/${prod.prodImg}'/>"/>
+			</td>
 		</tr>
 		<tr>
 			<th>총재고</th>
-			<td>${prod.prodTotalstock}</td>
+			<td>
+				
+			${prod.prodTotalstock}</td>
 		</tr>
 		
 		<tr>
