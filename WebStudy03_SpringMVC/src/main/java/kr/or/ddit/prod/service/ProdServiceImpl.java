@@ -1,5 +1,6 @@
 package kr.or.ddit.prod.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.exception.PkNotFoundException;
+import kr.or.ddit.paging.PaginationInfo;
 import kr.or.ddit.prod.dao.ProdDAO;
 import kr.or.ddit.vo.ProdVO;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +37,13 @@ public class ProdServiceImpl implements ProdService {
 	}
 	
 	private void processImage(ProdVO prod) {
+		MultipartFile uploadFile = prod.getProdImage();
 		String saveName = prod.getProdImg();
-		if(StringUtils.isBlank(saveName)) return;
+		if(uploadFile == null) return;
 		try {
-			Resource saveRes = prodImages.createRelative(saveName);
-			MultipartFile uploadFile = prod.getProdImage();
-			FileUtils.copyInputStreamToFile(uploadFile.getInputStream(), saveRes.getFile());
+//			Resource saveRes = prodImages.createRelative(saveName);
+			File saveFile = new File(prodImages.getFile(), saveName);
+			FileUtils.copyInputStreamToFile(uploadFile.getInputStream(), saveFile);
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
@@ -66,19 +69,23 @@ public class ProdServiceImpl implements ProdService {
 	}
 
 	@Override
-	public List<ProdVO> retrieveProdList() {		
-		return dao.selectProdList();
+	public List<ProdVO> retrieveProdList(PaginationInfo paging) {	
+		int totalRecord = dao.selectTotalRecord(paging);
+		paging.setTotalRecord(totalRecord);
+		return dao.selectProdList(paging);
 	}
 	
 	
 
 	@Override
 	public ServiceResult modifyProd(ProdVO prod) {
-		ServiceResult result = null;
 		
-		int cnt = dao.updateProd(prod);
-		result = cnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		if( dao.updateProd(prod) > 0) {
+			processImage(prod);
+			return ServiceResult.OK;
+		}else {
+			return ServiceResult.FAIL;
+		}
 		
-		return result;
 	}
 }

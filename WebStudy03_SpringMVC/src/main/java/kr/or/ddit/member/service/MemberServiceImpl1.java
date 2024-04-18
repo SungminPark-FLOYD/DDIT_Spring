@@ -5,6 +5,7 @@ import java.util.List;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.exception.PkNotFoundException;
 import kr.or.ddit.member.dao.MemberDAO;
+import kr.or.ddit.paging.PaginationInfo;
 import kr.or.ddit.vo.MemberVO;
 
 public class MemberServiceImpl1 implements MemberService {
@@ -21,8 +22,8 @@ public class MemberServiceImpl1 implements MemberService {
 	}
 
 	@Override
-	public List<MemberVO> retrieveMemberList() {
-		List<MemberVO> memberList = dao.selectMemberList();
+	public List<MemberVO> retrieveMemberList(PaginationInfo paging) {
+		List<MemberVO> memberList = dao.selectMemberList(paging);
 		return memberList;
 	}
 

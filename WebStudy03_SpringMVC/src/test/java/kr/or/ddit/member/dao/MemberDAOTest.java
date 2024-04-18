@@ -20,7 +20,7 @@ class MemberDAOTest extends AbstractRootContextTest{
 
 	@Test
 	void selectListTest() {
-		List<MemberVO> list = dao.selectMemberList();
+		List<MemberVO> list = dao.selectMemberList(paging);
 		for(MemberVO vo : list) {
 			System.out.println(vo);
 		}

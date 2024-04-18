@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 
 <style type="text/css">
 	tr[data-mem-id]{
@@ -98,6 +99,7 @@
 <table class="table table-bordered table-striped" >
 	<thead class="table-dark">
 		<tr>
+			<th>일련번호</th>
 			<th>회원명</th>
 			<th>기본주소</th>
 			<th>상세주소</th>
@@ -109,8 +111,9 @@
 	<tbody>
 		<c:if test="${not empty memberList }">
 		<c:forEach items="${memberList }" var="mem" >
-		<c:set value="${mem .memId eq lastCreated.memId ? 'active' : ''}" var="clzValue"/>
+		<c:set value="${mem.memId eq lastCreated.memId ? 'active' : ''}" var="clzValue"/>
 			<tr class="${clzValue }" data-mem-id="${mem.memId }" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				<td>${mem.rnum }</td>
 				<td>${mem.memName }</td>
 				<td>${mem.memAdd1 }</td>
 				<td>${mem.memAdd2 }</td>
@@ -128,8 +131,54 @@
 		<!-- 세션 삭제 -->
 		<c:remove var="lastCreated" scope="session"/>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="6">
+				<div id="searchUI">
+					<form:select path="paging.simpleCondition.searchType">
+						<form:option value="" label="전체" />
+						<form:option value="memName" label="이름" />
+						<form:option value="memAdd1" label="지역" />
+					</form:select>
+					<form:input path="paging.simpleCondition.searchWord"/>
+					<button id="searchBtn">검색</button>
+				</div>
+				${pagingHTML }
+<!-- 				이름, 지역, 전체 세가지 검색 조건으로 검색 및 페이징 커리 -->
+<!-- 				recordCount = 3, page = 2 -->
+			</td>
+		</tr>
+	</tfoot>
+	
 </table>
-
-
+<form:form modelAttribute="paging" action="${pageContext.request.contextPath }/member/memberList.do" 
+	id="searchForm" method="get">
+	<form:input path="simpleCondition.searchType"/>
+	<form:input path="simpleCondition.searchWord"/>
+	<input type="number" name="currentPage" value="1"/>
+	<form:input path="currentPage"/>
+</form:form>
+<script>	
+	function ${pageFunction}(page) {
+	//		location.href="?currentPage="+page;
+		searchForm.currentPage.value = page;
+		$searchForm.submit();
+	}
+	
+	//searchBtn을 클릭하면, searchUI가 가진 모든 입력값을 searchForm으로 복사하고, searchForm을 전송
+	const $searchForm = $("#searchForm");
+	$("#searchBtn").on("click", function(event){
+		let $searchUI = $(this).parents("#searchUI");
+		$searchUI.find(":input[name]").each(function(idx, ipt) {
+			let name = this.name;
+			let value = $(this).val();
+			
+			searchForm[name].value = value;
+	//			searchForm.searchType.value = value;
+	//			$searchForm.find(`[name='\${name}']`).val(value);
+		});
+		$searchForm.submit();
+	}) ;
+</script>
 
 <script src='<c:url value="/resources/js/member/memberList.js"/>'></script>

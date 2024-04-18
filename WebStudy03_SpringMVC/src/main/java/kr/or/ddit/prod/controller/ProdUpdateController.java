@@ -48,7 +48,7 @@ public class ProdUpdateController{
 			switch (result) {
 			case FAIL:
 				model.addAttribute("message", "서버 오류");
-				viewName = "prod/prodForm";
+				viewName = "prod/prodEdit";
 				break;
 			case OK:
 				viewName = "redirect:/prod/prodDetail.do?who="+prod.getProdId();
@@ -58,7 +58,7 @@ public class ProdUpdateController{
 			// 4. scope를 이용해 model 공유
 		}else {
 			//logical view Name
-			viewName = "prod/prodForm";
+			viewName = "prod/prodEdit";
 		}	
 
 		

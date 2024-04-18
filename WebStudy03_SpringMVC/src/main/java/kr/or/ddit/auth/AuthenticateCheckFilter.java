@@ -50,7 +50,7 @@ public class AuthenticateCheckFilter implements Filter{
 		Enumeration<Object> keys = securedProps.keys();
 		while(keys.hasMoreElements()) {
 			String uri = (String)keys.nextElement();
-			String[] values = securedProps.getProperty(uri).split(",");
+			String[] values = securedProps.getProperty(uri).split(",\\s*");
 			Arrays.sort(values);
 			securedResources.put(uri, values);
 			log.info("{} : {}", uri, values);
