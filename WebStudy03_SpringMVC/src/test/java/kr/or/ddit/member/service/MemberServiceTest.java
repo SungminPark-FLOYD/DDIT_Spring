@@ -32,7 +32,7 @@ class MemberServiceTest extends AbstractRootContextTest{
 
 	@Test
 	void testRetrieveMemberList() {
-		service.retrieveMemberList();
+		service.retrieveMemberList(paging);
 	}
 
 	@Test

@@ -11,21 +11,59 @@
 <!-- 			<result property="buyerName" column="BUYER_NAME"/> -->
 <!-- 		</association> -->
 	</resultMap>
-	<select id="selectProdList" resultMap="prodMap">
-	SELECT
-		    PROD_ID
-		    , PROD_NAME
-		    , PROD_LGU
-		    , PROD_BUYER
-		    , PROD_COST
-		    , PROD_PRICE
-		    , PROD_INSDATE
-		    , PROD_MILEAGE
-	        , BUYER_NAME
-	        , LPROD_NM
-		FROM
-		    PROD INNER JOIN BUYER ON(PROD_BUYER = BUYER_ID)
-	            INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
+	<sql id="searchFrag">
+		 <where>
+		    <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+			    <choose>
+			    	<when test="simpleCondition.searchType eq 'prodLgu'">
+			    		INSTR(PROD_LGU, #{simpleCondition.searchWord}) > 0
+			    	</when>
+			    	<when test="simpleCondition.searchType eq 'prodBuyer'">
+			    		INSTR(PROD_BUYER, #{simpleCondition.searchWord}) > 0
+			    	</when>
+			    	<when test="simpleCondition.searchType eq 'prodName'">
+			    		INSTR(PROD_NAME, #{simpleCondition.searchWord}) > 0
+			    	</when>
+			    	<otherwise>
+			    		INSTR(PROD_LGU, #{simpleCondition.searchWord}) > 0
+			    		OR INSTR(PROD_BUYER, #{simpleCondition.searchWord}) > 0
+			    		OR INSTR(PROD_NAME, #{simpleCondition.searchWord}) > 0
+			    	</otherwise>
+			    </choose>
+		    </if>
+	    </where>
+	</sql>
+	<select id="selectTotalRecord" resultType="int" parameterType="kr.or.ddit.paging.PaginationInfo">
+		SELECT COUNT(*)
+		FROM PROD
+	  <include refid="searchFrag"/>
+	</select>
+	<select id="selectProdList" resultMap="prodMap" parameterType="kr.or.ddit.paging.PaginationInfo">
+	SELECT B.*
+	FROM (
+	SELECT ROWNUM RNUM, A.*
+		FROM(
+			SELECT
+			    PROD_ID
+			    , PROD_NAME
+			    , PROD_LGU
+			    , PROD_BUYER
+			    , PROD_COST
+			    , PROD_PRICE
+			    , PROD_INSDATE
+			    , PROD_MILEAGE
+		        , BUYER_NAME
+		        , LPROD_NM
+			FROM
+			    PROD INNER JOIN BUYER ON(PROD_BUYER = BUYER_ID)
+		            INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
+		    <include refid="searchFrag"/>
+		    ORDER BY PROD.ROWID DESC
+		 ) A
+	 ) B
+	 <![CDATA[
+	 	WHERE RNUM >= #{firstRecord} AND RNUM <= #{lastRecord}
+	 ]]>
 	</select>
 	<select id="selectProd" resultMap="prodMap" parameterType="string">
 		WITH MEMBER_VIEW AS (
@@ -147,8 +185,9 @@
 			,PROD_QTYIN        = #{prodQtyin, jdbcType=NUMERIC}       
 			,PROD_QTYSALE      = #{prodQtysale, jdbcType=NUMERIC}     
 			,PROD_MILEAGE      = #{prodMileage, jdbcType=NUMERIC}  
-<!-- 			if문 묶기    -->
-			,PROD_IMG          = #{prodImg, jdbcType=VARCHAR} 
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(prodImg)">
+				,PROD_IMG          = #{prodImg, jdbcType=VARCHAR} 
+			</if>
 			        
 		WHERE PROD_ID = #{prodId, jdbcType=VARCHAR}	
 	</update>

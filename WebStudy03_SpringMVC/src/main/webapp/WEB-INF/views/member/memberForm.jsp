@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 
-<form:form modelAttribute="member" method="post" enctype="application/x-www-form-urlencoded">
+<form:form modelAttribute="member" method="post" enctype="multipart/form-data">
 	<table class="table table-bordered">
 			<tr>
 				<th>회원번호</th>
@@ -15,6 +15,12 @@
 				<th>암호</th>
 				<td><input type="password" name="memPass"  class="form-control" /><span
 					class="text-danger">${errors.memPass}</span></td>
+			</tr>
+			<tr>
+				<th>프로필 이미지</th>
+				<td>
+					<input type="file" name="memImage"/>
+				</td>
 			</tr>
 			<tr>
 				<th>회원명</th>

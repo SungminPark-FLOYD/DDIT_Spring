@@ -5,7 +5,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <form:form modelAttribute="<%=ProdUpdateController.MODELNAME%>"
-	method="post" enctype="application/x-www-form-urlencoded">
+	method="post" enctype="multipart/form-data">
 	<table class="table table-bordered">
 		<tr>
 			<th>상품코드</th>
@@ -64,7 +64,9 @@
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td><form:input type="text" path="prodImg" required="true"
+			<td>
+				<input type="file" name="prodImage"/>
+				<form:hidden  path="prodImg" required="true"
 					value="${prod.prodImg}" class="form-control" />
 				<from:errors path="prodImg" cssClass="text-danger" element="span" /></td>
 		</tr>

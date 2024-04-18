@@ -36,7 +36,7 @@ class MemberDAOImplTest extends AbstractRootContextTest{
 
 	@Test
 	void testSelectMemberList() {
-		List<MemberVO> list = dao.selectMemberList();
+		List<MemberVO> list = dao.selectMemberList(paging);
 		assertNotNull(list);
 		assertNotEquals(0,list.size());
 		log.info("list : {}", list);
