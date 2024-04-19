@@ -14,11 +14,13 @@ import lombok.ToString;
 @Data
 public class Case10CommandObject implements Serializable{
 	private String[] uploader;
+	
 	private int count;
 	
 	@JsonIgnore
 	@ToString.Exclude
 	private transient MultipartFile[] uploadFile;
+	private List<UploadFileVO> voList;
 	
 	public void setUploadFile(MultipartFile[] uploadFile) {
 		this.uploadFile = uploadFile;
@@ -30,5 +32,5 @@ public class Case10CommandObject implements Serializable{
 		}
 	}
 	
-	private List<UploadFileVO> voList;
+	
 }

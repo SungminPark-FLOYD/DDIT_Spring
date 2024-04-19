@@ -33,7 +33,7 @@ public class FileUploadControllerServlet extends HttpServlet{
 //		String uploader = req.getParameter("uploader");
 //		String count = req.getParameter("count");
 		//한번에 데이터를 받기 힘들기때문에 데이터를 나눠서 받는데 이것을 fileitemfactory가 보관한다(단위 chunk)
-		FileItemFactory itemFactory = new DiskFileItemFactory(10*10204, new File("D:/01.temp"));
+		FileItemFactory itemFactory = new DiskFileItemFactory(10*1024, new File("D:/01.temp"));
 		ServletFileUpload handler = new ServletFileUpload(itemFactory);
 		
 		try {
