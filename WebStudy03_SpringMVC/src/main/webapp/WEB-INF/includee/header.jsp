@@ -237,7 +237,18 @@
 	
 	          </ul><!-- End Profile Dropdown Items -->
 	        </li><!-- End Profile Nav -->
-
+			<script type="text/javascript">
+				document.querySelector("a[data-target-form]").addEventListener("click", e => {
+					e.preventDefault();
+					let aTag = e.target;
+					let formSelector = aTag.dataset.targetForm;
+					
+					let url = aTag.href;
+					let form = document.querySelector(formSelector);
+					form.action = url;
+					form.requestSubmit();
+				});
+			</script>
 	     </c:if>
 
 
@@ -246,15 +257,3 @@
 
   </header>
 <form id="logoutForm" method="post"></form>
-<script type="text/javascript">
-	document.querySelector("a[data-target-form]").addEventListener("click", e => {
-		e.preventDefault();
-		let aTag = e.target;
-		let formSelector = aTag.dataset.targetForm;
-		
-		let url = aTag.href;
-		let form = document.querySelector(formSelector);
-		form.action = url;
-		form.requestSubmit();
-	});
-</script>

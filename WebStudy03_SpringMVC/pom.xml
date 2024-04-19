@@ -43,6 +43,11 @@
 	    	<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.22</version>
+		</dependency>
+		<dependency>
 	    	<groupId>org.springframework</groupId>
 	    	<artifactId>spring-orm</artifactId>
 	    	<version>${org.springframework-version}</version>

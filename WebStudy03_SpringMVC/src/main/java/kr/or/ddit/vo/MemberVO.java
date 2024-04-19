@@ -34,7 +34,7 @@ import lombok.ToString;
  *  3번 그룹(탈퇴시 검증 그룹) : 비밀번호
  */
 @Data
-@ToString(exclude = {"memPass","memRegno1","memRegno2"})
+@ToString(exclude = {"memPass","memRegno1","memRegno2", "cart","memImg"})
 @EqualsAndHashCode(of = {"memId"})
 public class MemberVO implements Serializable{
 	private int rnum;
